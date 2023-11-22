@@ -4,19 +4,34 @@ import sympy as sp
 
 x = sp.symbols('x')
 
-def newton(f,x0,tol):
-    f_1 = f.diff(x)
-    N = x0 - f/f_1
-    N = sp.lambdify(x,N)
-    # F = sp.lambdify(x,f)
-    # F_1 = sp.lambdify(x,f_1)
-    c = N(x0)
-    d=[[x0,'-']]
+# def newton(f,x0,tol):
+#     f_1 = f.diff(x)
+#     N = x0 - f/f_1
+#     N = sp.lambdify(x,N)
+#     # F = sp.lambdify(x,f)
+#     # F_1 = sp.lambdify(x,f_1)
+#     c = N(x0)
+#     d=[[x0,'-']]
 
-    while np.abs((c-x0)) > tol:
-        d.append([c,np.abs((c-x0)) ]) 
-        c = N(x0)
-        x0 = c         
+#     while np.abs((c-x0)) > tol:
+#         d.append([c,np.abs((c-x0)) ]) 
+#         c = N(x0)
+#         x0 = c         
+#     return c,d
+def newton(f,x0,tol=1E-2):
+    F = sp.lambdify(x,f)
+    f_1 = f.diff(x)
+    F_1 = sp.lambdify(x,f_1)
+    ea = 1
+    iter = 0
+    d=[[x0,ea]]
+    
+    while ea > tol:
+        c = x0 - F(x0)/F_1(x0) 
+        ea = np.abs((c-x0))
+        x0 = c
+        iter +=1
+        d.append([c,ea])        
     return c,d
   
 def biseccion(f,a,b,tol):

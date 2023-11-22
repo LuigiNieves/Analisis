@@ -1,7 +1,8 @@
 import tkinter as tk
 from functions.Zeros import *
-from sympy import symbols,lambdify
-from tkinter import
+from sympy import symbols,lambdify,exp,log
+from tkinter import ttk
+
 
 class Home(tk.Frame):
   def __init__(self,parent,controller):
@@ -41,36 +42,18 @@ class AZeros(tk.Frame):
       # entry.bind("<KeyRelease>", lambda event, idx=idx: self.obtener_contenido(event, idx))
       self.entries.append(entry)
     
-  def show_result(self):    
-    self.top = tk.Toplevel(self)
-    self.top.title("Tabla en Tkinter")
+  def show_result(self,data):    
+    top = tk.Toplevel(self)
+    top.title("Tabla de datos")
 
-    # Definir las columnas de la tabla
-    self.columnas = ("columna1", "columna2", "columna3")
+    tree = ttk.Treeview(top, columns=("Columna 1", "Columna 2"), show="headings")
+    tree.heading("Columna 1", text="Dato")
+    tree.heading("Columna 2", text="Descripción")
 
-    # Crear el Treeview
-    self.tabla = ttk.Treeview(self.top, columns=self.columnas, show='headings')
+    for dato, descripcion in data:
+      tree.insert("", "end", values=(dato, descripcion))
 
-    # Definir los encabezados y dimensiones de las columnas
-    for columna in self.columnas:
-        self.tabla.heading(columna, text=columna.capitalize())
-        self.tabla.column(columna, width=100)
-
-    # Añadir datos de ejemplo
-    self.insertar_datos()
-
-    # Posicionar la tabla
-    self.tabla.pack(expand=True, fill='both')
-
-def insertar_datos(self):
-    datos = [
-        ("Dato 1", "Dato 2", "Dato 3"),
-        ("Dato 4", "Dato 5", "Dato 6"),
-        ("Dato 7", "Dato 8", "Dato 9")
-    ]
-
-    for dato in datos:
-        self.tabla.insert('', tk.END, values=dato)    
+    tree.pack()   
 
 class CNewton(AZeros):
   def __init__(self, parent, controller, orden=0):
@@ -87,7 +70,8 @@ class CNewton(AZeros):
       print(a,b)
       # ultima_fila = self.grid_size()[1] - 1
     except Exception as e:
-      print(e)
+      print(e) 
+    self.show_result(b)  
 
 class CSecante(AZeros):
   def __init__(self, parent, controller, orden=1):
