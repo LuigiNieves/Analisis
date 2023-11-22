@@ -4,86 +4,62 @@ import sympy as sp
 
 x = sp.symbols('x')
 
-# def newton(f,x0,tol):
-#     f_1 = f.diff(x)
-#     N = x0 - f/f_1
-#     N = sp.lambdify(x,N)
-#     # F = sp.lambdify(x,f)
-#     # F_1 = sp.lambdify(x,f_1)
-#     c = N(x0)
-#     d=[[x0,'-']]
+import sympy as sp
 
-#     while np.abs((c-x0)) > tol:
-#         d.append([c,np.abs((c-x0)) ]) 
-#         c = N(x0)
-#         x0 = c         
-#     return c,d
-def newton(f,x0,tol=1E-2):
-    F = sp.lambdify(x,f)
-    f_1 = f.diff(x)
-    F_1 = sp.lambdify(x,f_1)
-    ea = 1
-    iter = 0
-    d=[[x0,ea]]
-    
-    while ea > tol:
-        c = x0 - F(x0)/F_1(x0) 
-        ea = np.abs((c-x0))
-        x0 = c
-        iter +=1
-        d.append([c,ea])        
-    return c,d
-  
-def biseccion(f,a,b,tol):
-    f = sp.lambdify(x,f)
-    iter = 0 
-    L=[[b,'-']]
-    if f(a)*f(b) > 0:
-        print('La funcion no cumple el teorema',f(a),'y ',f(b))
+#Método de bisección
+def biseccion(f,a,b,tolerancia=1E-6 ):
+  if f(a)*f(b) > 0:
+    return 'No cumple el teorema'
+  c = (a+b)/2
+  valores = [[],[],[]]
+  while abs(b - a) >= tolerancia:
+    c = (a+b)/2
+    valores[0].append(a)
+    valores[1].append(b)
+    valores[2].append(c)
+    if f(a)*f(c) < 0:
+      b=c
     else:
-        while np.abs(b-a) > tol:
-            iter+=1
-            c = (a+b)/2
-            if f(a)*f(c) < 0:
-                ea = np.abs(b-c)
-                b=c
-            else:
-                ea = np.abs(a-c)
-                a=c
-            L.append([c,ea])    
-            # print('La raiz de la funcion es: ',c, 'iter', iter, 'intervalo ',a,b)
-    return c,L  
+      a=c
+  return valores[0],valores[1],valores[2]
 
-def falsaPosicion(f,a,b,tol):
-    f = sp.lambdify(x,f)
-    iter = 0 
-    ea=1
-    L=[[b,'-']]
-    if f(a)*f(b) > 0:
-        print('La funcion no cumple el teorema',f(a),'y ',f(b))
+# Método de falsa posición
+def falsa_posicion(f,a,b,tolerancia = 0.01):
+  if (f(a)*f(b)) > 0 :
+    return 'No hay raices'
+  c = a - ((f(a)*(a-b))/(f(a)-f(b)))
+  valores = [[a],[b],[c]]
+  while abs(f(c)) >= tolerancia:
+    c = a - ((f(a)*(a-b))/(f(a)-f(b)))
+    if f(a)*f(c) < 0:
+      b=c
     else:
-        c = b-((f(b)*(a-b))/(f(a)-f(b)))
-        while ea > tol:
-            iter+=1
-            c = a-((f(a)*(a-b))/(f(a)-f(b)))
-            if f(a)*f(c) < 0:
-                ea = np.abs(b-c)
-                b=c
-            else:
-                ea = np.abs(a-c)
-                a=c
-            L.append([c,ea])
-    return c,L 
+      a=c
+    valores[0].append(a)
+    valores[1].append(b)
+    valores[2].append(c)
+  return valores[0],valores[1],valores[2]
 
-def secante(f,x0,x1,tol):
-    F = sp.lambdify(x,f)
-    c = x1 - (F(x1)*(x1-x0))/(F(x1)-F(x0))
-    d=[[x1,np.abs((c-x1))]]
-    while np.abs((c-x1)) > tol :
-        ea = np.abs((c-x1))
-        x1 = x0
-        x0 = c
-        d.append([c,ea]) 
-        c = x1 - (F(x1)*(x1-x0))/(F(x1)-F(x0))        
-    return c,d
-  
+#Método de Newton
+def newton(funcion,x,semilla,tolerancia=0.01):
+  try:
+    dx = funcion.diff(x)
+  except:
+    return 'Algo salio mal'
+  if (dx == 0): return 'Derivada igual a 0'
+  puntos = [semilla]
+  f = sp.lambdify(x,funcion)
+  f_ = sp.lambdify(x,dx)
+  xi = lambda: puntos[-1] - f(puntos[-1])/f_(puntos[-1])
+  puntos.append(xi())
+  while (abs(puntos[-1] - puntos[-2]) > tolerancia):
+    puntos.append(xi())
+  return puntos
+
+#Método de secante
+def secante(f,x_0,x_1,tolerancia=0.01):
+  puntos = [x_0,x_1]
+  xi = lambda: puntos[-1] - f(puntos[-1])*(puntos[-2] - puntos[-1])/(f(puntos[-2]) - f(puntos[-1]))
+  while (abs(puntos[-1] - puntos[-2]) >= tolerancia):
+    puntos.append(xi())
+  return puntos
