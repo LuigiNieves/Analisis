@@ -47,13 +47,13 @@ def newton(funcion,x,semilla,tolerancia=0.01):
   except:
     return 'Algo salio mal'
   if (dx == 0): return 'Derivada igual a 0'
-  puntos = [semilla]
+  puntos = [[semilla,'-']]
   f = sp.lambdify(x,funcion)
   f_ = sp.lambdify(x,dx)
-  xi = lambda: puntos[-1] - f(puntos[-1])/f_(puntos[-1])
-  puntos.append(xi())
-  while (abs(puntos[-1] - puntos[-2]) > tolerancia):
-    puntos.append(xi())
+  xi = lambda: puntos[-1][0] - f(puntos[-1][0])/f_(puntos[-1][0])
+  puntos.append([xi(),abs(xi() - puntos[-2][0])/xi()])
+  while (abs(puntos[-1][0] - puntos[-2][0]) > tolerancia):
+    puntos.append([xi(),abs(xi() - puntos[-2][0])/xi()])
   return puntos
 
 #Método de secante
