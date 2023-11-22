@@ -1,15 +1,11 @@
-
 import tkinter as tk
-import tkinter
-from typing import Container
-from interfaz import Home,cajas,CNewton,Otros
-from tkinter import Menu,Label,StringVar,ttk
+from windows.IZeros import Home,Caja,CNewton,Otros
+from tkinter import Menu
 
 class Admin(tk.Tk):
-
   def __init__(self, *args, **kwargs):
     super().__init__(*args,**kwargs)
-    self.title("cuatro en Linea")
+    self.title("Analisis Númerico Proyecto Final")
     container=tk.Frame(self)
     self.crear_menu=self.crear_barra_menu()
     container.pack(
@@ -17,13 +13,11 @@ class Admin(tk.Tk):
         fill = tk.BOTH,
         expand = True
     )
-    
-    # container.configure(background = style.BACKGROUND)
     container.grid_columnconfigure(0,weight=1)
     container.grid_rowconfigure(0,weight=1)
 
     self.frames={}
-    for F in (Home,cajas,CNewton,Otros):
+    for F in (Home,Caja,CNewton,Otros):
         frame=F(container,self)
         self.frames[F]=frame
         frame.grid(row=0, column=0, sticky =tk.NSEW)
@@ -42,33 +36,26 @@ class Admin(tk.Tk):
 
   def crear_barra_menu(self):
     self.barra_menu = Menu()
-
     self.menu_juego = Menu( tearoff=0 )
-  
-    self.menu_juego.add_command(label="Integracion",font=("Arial","10"),command=lambda:self.show_frame(cajas))
-    # self.menu_juego.add_command(label="6X6",font=("Arial","10"))
-    # self.menu_juego.add_command(label="Otra partida",font=("Arial","10"),command=lambda:self.enable())
+    self.menu_juego.add_command(label="Integracion",font=("Arial","10"),command=lambda:self.show_frame(Caja))
+    sub_menu_ceros = tk.Menu(self.menu_juego,tearoff=0)
+    sub_menu_ceros.add_command(label="Biseccion",font=("Arial","10"),command=lambda:self.show_frame(Otros))
+    sub_menu_ceros.add_command(label="Falsa Posición",font=("Arial","10"),command=lambda:self.show_frame(Otros))
+    sub_menu_ceros.add_command(label="Newton",font=("Arial","10"),command=lambda:self.show_frame(CNewton))
+    sub_menu_ceros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(Otros))
 
-    subMenuCeros = tk.Menu(self.menu_juego,tearoff=0)
-    subMenuCeros.add_command(label="Biseccion",font=("Arial","10"),command=lambda:self.show_frame(Otros))
-    subMenuCeros.add_command(label="Falsa Posición",font=("Arial","10"),command=lambda:self.show_frame(Otros))
-    subMenuCeros.add_command(label="Newton",font=("Arial","10"),command=lambda:self.show_frame(CNewton))
-    subMenuCeros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(Otros))
+    sub_menu_curvas = tk.Menu(self.menu_juego,tearoff=0)
+    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"))
+    sub_menu_curvas.add_command(label="Runge Kutta",font=("Arial","10"))
 
-    subMenuCurvas = tk.Menu(self.menu_juego,tearoff=0)
-    subMenuCurvas.add_command(label="Euler",font=("Arial","10"))
-    subMenuCurvas.add_command(label="Runge Kutta",font=("Arial","10"))
-
-    subMenuInterpolacion = tk.Menu(self.menu_juego,tearoff=0)
-    subMenuInterpolacion.add_command(label="Polinomial Simple",font=("Arial","10"))
-    subMenuInterpolacion.add_command(label="Lagrange",font=("Arial","10"))
-    subMenuInterpolacion.add_command(label="Minimos Cuadrados",font=("Arial","10"))
+    sub_menu_interpolacion = tk.Menu(self.menu_juego,tearoff=0)
+    sub_menu_interpolacion.add_command(label="Polinomial Simple",font=("Arial","10"))
+    sub_menu_interpolacion.add_command(label="Lagrange",font=("Arial","10"))
+    sub_menu_interpolacion.add_command(label="Minimos Cuadrados",font=("Arial","10"))
     
-
-    
-    self.menu_juego.add_cascade(label="Ceros", menu = subMenuCeros )  
-    self.menu_juego.add_cascade(label="Curvas", menu = subMenuCurvas )  
-    self.menu_juego.add_cascade(label="Interpolacion", menu = subMenuInterpolacion)  
+    self.menu_juego.add_cascade(label="Ceros", menu = sub_menu_ceros )  
+    self.menu_juego.add_cascade(label="Curvas", menu = sub_menu_curvas )  
+    self.menu_juego.add_cascade(label="Interpolacion", menu = sub_menu_interpolacion)  
 
     self.menu_juego.add_command(label="Salir",font=("Arial","10"),command = self.salir_ventana)
     self.barra_menu.add_cascade(label = "Iniciar", menu = self.menu_juego ) 

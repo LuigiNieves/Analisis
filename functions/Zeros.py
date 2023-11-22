@@ -1,13 +1,10 @@
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import sympy as sp 
 
 x = sp.symbols('x')
-def imprimir():
-  return "imprimir"
 
-def Newton(f,x0,tol):
+def newton(f,x0,tol):
     f_1 = f.diff(x)
     N = x0 - f/f_1
     N = sp.lambdify(x,N)
@@ -75,6 +72,3 @@ def secante(f,x0,x1,tol):
         c = x1 - (F(x1)*(x1-x0))/(F(x1)-F(x0))        
     return c,d
   
-  
-# a,b= Newton(x**2-6, 3, 0.008)
-# print(a,b)
