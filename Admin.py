@@ -1,5 +1,5 @@
 import tkinter as tk
-from windows.IZeros import Home,Caja,CNewton,Otros
+from windows.IZeros import Home, CNewton, CBiseccion, CFalsaPosicion, CSecante
 from tkinter import Menu
 
 class Admin(tk.Tk):
@@ -17,7 +17,7 @@ class Admin(tk.Tk):
     container.grid_rowconfigure(0,weight=1)
 
     self.frames={}
-    for F in (Home,Caja,CNewton,Otros):
+    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante):
         frame=F(container,self)
         self.frames[F]=frame
         frame.grid(row=0, column=0, sticky =tk.NSEW)
@@ -37,12 +37,12 @@ class Admin(tk.Tk):
   def crear_barra_menu(self):
     self.barra_menu = Menu()
     self.menu_juego = Menu( tearoff=0 )
-    self.menu_juego.add_command(label="Integracion",font=("Arial","10"),command=lambda:self.show_frame(Caja))
+    self.menu_juego.add_command(label="Integracion",font=("Arial","10"),command=lambda:self.show_frame(CBiseccion))
     sub_menu_ceros = tk.Menu(self.menu_juego,tearoff=0)
-    sub_menu_ceros.add_command(label="Biseccion",font=("Arial","10"),command=lambda:self.show_frame(Otros))
-    sub_menu_ceros.add_command(label="Falsa Posición",font=("Arial","10"),command=lambda:self.show_frame(Otros))
+    sub_menu_ceros.add_command(label="Biseccion",font=("Arial","10"),command=lambda:self.show_frame(CBiseccion))
+    sub_menu_ceros.add_command(label="Falsa Posición",font=("Arial","10"),command=lambda:self.show_frame(CFalsaPosicion))
     sub_menu_ceros.add_command(label="Newton",font=("Arial","10"),command=lambda:self.show_frame(CNewton))
-    sub_menu_ceros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(Otros))
+    sub_menu_ceros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(CSecante))
 
     sub_menu_curvas = tk.Menu(self.menu_juego,tearoff=0)
     sub_menu_curvas.add_command(label="Euler",font=("Arial","10"))
