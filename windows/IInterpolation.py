@@ -11,28 +11,30 @@ class AInterpolation(tk.Frame):
     self.configure(background = "blue")
     self.controller =controller  
     # self.orden = orden
-    self.cuadros =  cuadros
+    self.cuadros = cuadros
     self.entries =[]
     self.widget()
-    
+
   def widget(self):
     for idx, label_text in enumerate(self.cuadros):
       label = tk.Label(self, text=label_text, width=3)
       label.grid(row=idx, column=0, padx=1, pady=1)
-      
       entry = tk.Entry(self, width=65)
       entry.grid(row=idx, column=1, padx=1, pady=1)
-    
       self.entries.append(entry)
     
-  def show_result(self,grafica):    
+  def show_result(self,value):    
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
-
     imagen = Image.open('img.png')
     imagen_tk = ImageTk.PhotoImage(imagen)
-    label_imagen = tk.Label(top, image=imagen_tk)
+
+    label_new = tk.Label(top,text=value)
+    label_new.pack()
+
+    label_imagen = tk.Label(top,image=imagen_tk)
     label_imagen.pack()
+
     
 
 class CMinimos(AInterpolation):
@@ -46,12 +48,12 @@ class CMinimos(AInterpolation):
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_minimos())  
     execute.grid(row=ultima_fila+2, column=0, padx=2, pady=5)
+
+    # xdata = [float(i) for i in [1,2,3,4,5] if self.isNumeric(i)]
+    # ydata = [float(i) for i in [9,19,82,101,200] if self.isNumeric(i)]
     
-    xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
-    ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
-    
-    grafica=self.graficar(xdata,ydata)
-    self.show_result(grafica)
+    # self.graficar(xdata,ydata)
+    # self.show_result()
   
   def isNumeric(self,s):
     try:
@@ -60,28 +62,26 @@ class CMinimos(AInterpolation):
     except ValueError:
         return False   
     
-  def graficar(self,xdata,ydata):
-  
-    x = np.linspace(0, 10, 100)
-    y = np.sin(x)
-
+  def graficar(self,x,y,f):
     plt.figure(figsize=(6, 4))
-    plt.plot(x, y)
+    plt.plot(x, y,'o',label='Originales')
+    plt.plot(x,[f(i) for i in x],label='Minimos cuadrados')
     plt.title('Gráfica de ejemplo')
     plt.xlabel('Eje X')
     plt.ylabel('Eje Y')
-    plt.grid(True)
-        
+    plt.grid()
     plt.savefig('img.png')
+    plt.legend()
     plt.close()
-   
 
-  def solve_minimo(self): 
+
+  def solve_minimos(self): 
     try:
       xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
       ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
-    
-      a0,a1 = minimos_cuadrados(xdata,ydata)  
+      a0,a1,f = minimos_cuadrados(xdata,ydata)  
+      self.graficar(xdata,ydata,f)
+      self.show_result(f'{a0} + ({a1})*x')
     except Exception as e:
       print(e) 
 
@@ -97,8 +97,6 @@ class CPsimple(AInterpolation):
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_Psimple())  
     execute.grid(row=ultima_fila+2, column=0, padx=2, pady=5) 
-    
-    
     
 
   def isNumeric(self,s):

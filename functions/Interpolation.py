@@ -16,7 +16,7 @@ def minimos_cuadrados(dx,dy):
   a0 = (Sy*Sx_2-Sx*Sxy)/denominador
   a1 = (m*Sxy-Sx*Sy)/denominador
   m = a0 + a1*x
-  return a0,a1
+  return a0,a1,sp.lambdify(x,m)
 
 def p_simple(xdata,ydata):
   N=len(xdata)
