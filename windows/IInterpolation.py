@@ -44,13 +44,13 @@ class CMinimos(AInterpolation):
   def __init__(self, parent, controller, order=0, squares=0):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller, order, squares)
-    ultima_fila = self.grid_size()[1] - 1
+    last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
-    self.result.grid(row=ultima_fila+1, column=1, padx=1, pady=1,sticky='nsew' )
+    self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_minimos())  
-    execute.grid(row=ultima_fila+2, column=0, padx=2, pady=5)
+    execute.grid(row=last_row+2, column=0, padx=2, pady=5)
 
     # xdata = [float(i) for i in [1,2,3,4,5] if self.isNumeric(i)]
     # ydata = [float(i) for i in [9,19,82,101,200] if self.isNumeric(i)]
@@ -94,13 +94,13 @@ class CPsimple(AInterpolation):
   def __init__(self, parent, controller, order=0, squares=0):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller, order, squares)
-    ultima_fila = self.grid_size()[1] - 1
+    last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
-    self.result.grid(row=ultima_fila+1, column=1, padx=1, pady=1,sticky='nsew' )
+    self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_Psimple())  
-    execute.grid(row=ultima_fila+2, column=0, padx=2, pady=5) 
+    execute.grid(row=last_row+2, column=0, padx=2, pady=5) 
     
 
   def isNumeric(self,s):
@@ -125,13 +125,13 @@ class CLagrange(AInterpolation):
   def __init__(self, parent, controller, order=0, squares=0):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller, order, squares)
-    ultima_fila = self.grid_size()[1] - 1
+    last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
-    self.result.grid(row=ultima_fila+1, column=1, padx=1, pady=1,sticky='nsew' )
+    self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_Psimple())  
-    execute.grid(row=ultima_fila+2, column=0, padx=2, pady=5) 
+    execute.grid(row=last_row+2, column=0, padx=2, pady=5) 
     
 
   def isNumeric(self,s):
