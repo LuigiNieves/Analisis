@@ -46,12 +46,21 @@ class AZeros(tk.Frame):
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
 
-    tree = ttk.Treeview(top, columns=("Columna 1", "Columna 2"), show="headings")
-    tree.heading("Columna 1", text="Dato")
-    tree.heading("Columna 2", text="Descripción")
+    tree = ttk.Treeview(top, columns=("Columna 1", "Columna 2"),show="headings")
+    tree.heading("Columna 1", text="Raiz")
+    tree.heading("Columna 2", text="Error")
 
+    
     for dato, descripcion in data:
       tree.insert("", "end", values=(dato, descripcion))
+    
+    tree.tag_configure('oddrow', background='#F0F0F0')  # Color para filas impares
+    tree.tag_configure('evenrow', background='white')  # Color para filas pares
+    for i, item in enumerate(tree.get_children()):
+      if i % 2 == 0:
+          tree.item(item, tags=('evenrow',))
+      else:
+          tree.item(item, tags=('oddrow',))  
 
     tree.pack()   
 
@@ -87,7 +96,7 @@ class CSecante(AZeros):
       x=symbols('x')
       a = secante(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
       print(a)
-      # ultima_fila = self.grid_size()[1] - 1
+      self.show_result(a)
     except Exception as e:
       print(e)    
     
@@ -102,9 +111,9 @@ class CBiseccion(AZeros):
   def solve_biseccion(self): 
     try:
       x=symbols('x')
-      a,b = biseccion(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
-      print(a,b)
-      # ultima_fila = self.grid_size()[1] - 1
+      a = biseccion(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
+      print(a)
+      self.show_result(a)
     except Exception as e:
       print(e)     
      
@@ -117,11 +126,12 @@ class CFalsaPosicion(AZeros):
     execute.grid(row=4, column=0, padx=10, pady=5)     
   
   def solve_biseccion(self): 
+    print(len(self.entries))
     try:
       x=symbols('x')
-      a,b = biseccion(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
-      print(a,b)
-      # ultima_fila = self.grid_size()[1] - 1
+      a = biseccion(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
+      print(a)
+      self.show_result(a)
     except Exception as e:
       print(e)   
           

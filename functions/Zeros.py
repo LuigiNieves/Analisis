@@ -7,7 +7,8 @@ x = sp.symbols('x')
 import sympy as sp
 
 #Método de bisección
-def biseccion(f,a,b,tolerancia=1E-6 ):
+def biseccion(f,a,b,tolerancia=1E-6 ):  
+  f = sp.lambdify(x,f)  
   if f(a)*f(b) > 0:
     return 'No cumple el teorema'
   c = (a+b)/2
