@@ -41,7 +41,7 @@ def falsa_posicion(f,a,b,tolerancia = 0.01):
   return valores[0],valores[1],valores[2]
 
 #Método de Newton
-def newton(funcion,x,semilla,tolerancia=0.01):
+def newton(funcion,semilla,tolerancia=0.01):
   try:
     dx = funcion.diff(x)
   except:
@@ -51,7 +51,7 @@ def newton(funcion,x,semilla,tolerancia=0.01):
   f = sp.lambdify(x,funcion)
   f_ = sp.lambdify(x,dx)
   xi = lambda: puntos[-1][0] - f(puntos[-1][0])/f_(puntos[-1][0])
-  puntos.append([xi(),abs(xi() - puntos[-2][0])/xi()])
+  puntos.append([xi(),abs(xi() - puntos[-1][0])/xi()])
   while (abs(puntos[-1][0] - puntos[-2][0]) > tolerancia):
     puntos.append([xi(),abs(xi() - puntos[-2][0])/xi()])
   return puntos

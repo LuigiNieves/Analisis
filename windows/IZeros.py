@@ -66,12 +66,12 @@ class CNewton(AZeros):
   def solve_newton(self): 
     try:
       x=symbols('x')
-      a,b = newton(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()))
-      print(a,b)
+      a = newton(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()))
+      print(a)
+      self.show_result(a)  
       # ultima_fila = self.grid_size()[1] - 1
     except Exception as e:
       print(e) 
-    self.show_result(b)  
 
 class CSecante(AZeros):
   def __init__(self, parent, controller, orden=1):
@@ -85,8 +85,8 @@ class CSecante(AZeros):
   def solve_secante(self): 
     try:
       x=symbols('x')
-      a,b = secante(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
-      print(a,b)
+      a = secante(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
+      print(a)
       # ultima_fila = self.grid_size()[1] - 1
     except Exception as e:
       print(e)    
