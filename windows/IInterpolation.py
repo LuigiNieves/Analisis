@@ -1,7 +1,5 @@
 import tkinter as tk
 from functions.Interpolation import *
-from sympy import symbols,lambdify,exp,log
-from tkinter import ttk
 from PIL import Image, ImageTk
 
 

@@ -29,7 +29,6 @@ def p_simple(xdata,ydata):
   ai = np.linalg.solve(M,ydata)
   for i in range(N):
     P = P+ai[i]*X**i
-  print('El polinomio interpolante es : P(X)=' ,P)
   return sp.lambdify(X,P),P
 
 
