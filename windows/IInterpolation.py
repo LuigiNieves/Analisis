@@ -5,6 +5,13 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+def isNumeric(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False  
+
 
 class AInterpolation(tk.Frame):
   def __init__(self, parent, controller,order=0,squares=0):
@@ -58,30 +65,24 @@ class CMinimos(AInterpolation):
     # self.graph(xdata,ydata)
     # self.show_result()
   
-  def isNumeric(self,s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False   
+   
     
   def graph(self,x,y,f):
     self.fig=plt.figure(figsize=(6, 4))
-    plt.plot(x, y,'o',label='Originales')
+    plt.plot(x, y,'o',label='Puntos Observados')
     plt.plot(x,[f(i) for i in x],label='Minimos cuadrados')
     plt.title('Gráfica de ejemplo')
     plt.xlabel('Eje X')
     plt.ylabel('Eje Y')
     plt.grid()
-    # plt.savefig('img.png')
     plt.legend()
     plt.close()
 
 
   def solve_minimos(self): 
     try:
-      xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
-      ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
+      xdata = [float(i) for i in self.entries[0].get().split(' ') if isNumeric(i)]
+      ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
       a0,a1,f = minimos_cuadrados(xdata,ydata) 
       self.result.config(text=f'{a0} + ({a1})*x') 
       self.graph(xdata,ydata,f)
@@ -102,19 +103,11 @@ class CPsimple(AInterpolation):
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_Psimple())  
     execute.grid(row=last_row+2, column=0, padx=2, pady=5) 
     
-
-  def isNumeric(self,s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False  
-      
   def solve_Psimple(self): 
     try:
-      xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
-      ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
-    
+      xdata = [float(i) for i in self.entries[0].get().split(' ') if isNumeric(i)]
+      ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
+
       P,f = p_simple(xdata,ydata)  
       self.result.config(text=P)
     except Exception as e:
