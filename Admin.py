@@ -1,6 +1,6 @@
 import tkinter as tk
 from windows.IZeros import Home, CNewton, CBiseccion, CFalsaPosicion, CSecante
-from windows.IEdo import CEuler
+from windows.IInterpolation import CPsimple
 from tkinter import Menu
 
 class Admin(tk.Tk):
@@ -18,7 +18,7 @@ class Admin(tk.Tk):
     container.grid_rowconfigure(0,weight=1)
 
     self.frames={}
-    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante,CEuler):
+    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante,CPsimple):
         frame=F(container,self)
         self.frames[F]=frame
         frame.grid(row=0, column=0, sticky =tk.NSEW)
@@ -46,11 +46,11 @@ class Admin(tk.Tk):
     sub_menu_ceros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(CSecante))
 
     sub_menu_curvas = tk.Menu(self.menu_juego,tearoff=0)
-    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"),command=lambda:self.show_frame(CEuler))
+    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"))
     sub_menu_curvas.add_command(label="Runge Kutta",font=("Arial","10"))
 
     sub_menu_interpolacion = tk.Menu(self.menu_juego,tearoff=0)
-    sub_menu_interpolacion.add_command(label="Polinomial Simple",font=("Arial","10"))
+    sub_menu_interpolacion.add_command(label="Polinomial Simple",font=("Arial","10"),command=lambda:self.show_frame(CPsimple))
     sub_menu_interpolacion.add_command(label="Lagrange",font=("Arial","10"))
     sub_menu_interpolacion.add_command(label="Minimos Cuadrados",font=("Arial","10"))
     
