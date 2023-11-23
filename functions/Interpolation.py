@@ -45,7 +45,7 @@ def lagrange(xdata,ydata):
   return P,sp.lambdify(X,P)
 
 def graficas9(x,y):
-  plt.subplots_adjust(left=None, bottom=None,right=None,top=None,wspace=None,hspace=0.5)
+  fig =plt.subplots_adjust(left=None, bottom=None,right=None,top=None,wspace=None,hspace=0.5)
   plt.figure(figsize=(16,12))
 
   plt.subplot(331)
@@ -110,3 +110,5 @@ def graficas9(x,y):
   plt.grid()
   plt.legend()
   plt.title('1/sqrt(y)')
+  
+  return fig

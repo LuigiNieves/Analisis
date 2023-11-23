@@ -31,18 +31,11 @@ class AInterpolation(tk.Frame):
       entry.grid(row=idx, column=1, padx=1, pady=1)
       self.entries.append(entry)
     
-  def show_result(self,value):    
+  def show_result(self,graph):    
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
-    # imagen = Image.open('img.png')
-    # imagen_tk = ImageTk.PhotoImage(imagen)
-
-    # label_new = tk.Label(top,text=value)
-    # label_new.pack()
-
-    # label_imagen = tk.Label(top,image=imagen_tk)
-    # label_imagen.pack()
-    canvas = FigureCanvasTkAgg(self.fig, master=top)
+    
+    canvas = FigureCanvasTkAgg(graph, master=top)
     canvas.draw()
     canvas.get_tk_widget().pack()
     
@@ -59,16 +52,11 @@ class CMinimos(AInterpolation):
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_minimos())  
     execute.grid(row=last_row+2, column=0, padx=2, pady=5)
 
-    # xdata = [float(i) for i in [1,2,3,4,5] if self.isNumeric(i)]
-    # ydata = [float(i) for i in [9,19,82,101,200] if self.isNumeric(i)]
-    
-    # self.graph(xdata,ydata)
-    # self.show_result()
   
    
     
   def graph(self,x,y,f):
-    self.fig=plt.figure(figsize=(6, 4))
+    fig=plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Puntos Observados')
     plt.plot(x,[f(i) for i in x],label='Minimos cuadrados')
     plt.title('Gráfica de ejemplo')
@@ -77,6 +65,8 @@ class CMinimos(AInterpolation):
     plt.grid()
     plt.legend()
     plt.close()
+    
+    return fig
 
 
   def solve_minimos(self): 
@@ -85,8 +75,8 @@ class CMinimos(AInterpolation):
       ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
       a0,a1,f = minimos_cuadrados(xdata,ydata) 
       self.result.config(text=f'{a0} + ({a1})*x') 
-      self.graph(xdata,ydata,f)
-      self.show_result(f'{a0} + ({a1})*x')
+      graph = self.graph(xdata,ydata,f)
+      self.show_result(graph)
     except Exception as e:
       print(e) 
 
