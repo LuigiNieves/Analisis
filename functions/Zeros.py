@@ -11,34 +11,30 @@ def biseccion(f,a,b,tolerancia=1E-6 ):
   if f(a)*f(b) > 0:
     return 'No cumple el teorema'
   c = (a+b)/2
-  valores = [[],[],[]]
+  puntos = [[c,abs((b-a)/b)]]
   while abs(b - a) >= tolerancia:
     c = (a+b)/2
-    valores[0].append(a)
-    valores[1].append(b)
-    valores[2].append(c)
     if f(a)*f(c) < 0:
       b=c
     else:
       a=c
-  return valores[0],valores[1],valores[2]
+    puntos.append([c,abs((b-a)/b)])
+  return puntos
 
 # Método de falsa posición
 def falsa_posicion(f,a,b,tolerancia = 0.01):
   if (f(a)*f(b)) > 0 :
     return 'No hay raices'
   c = a - ((f(a)*(a-b))/(f(a)-f(b)))
-  valores = [[a],[b],[c]]
+  puntos = [[c , f(c)]]
   while abs(f(c)) >= tolerancia:
     c = a - ((f(a)*(a-b))/(f(a)-f(b)))
     if f(a)*f(c) < 0:
       b=c
     else:
       a=c
-    valores[0].append(a)
-    valores[1].append(b)
-    valores[2].append(c)
-  return valores[0],valores[1],valores[2]
+    puntos.append([c,f(c)])
+  return puntos
 
 #Método de Newton
 def newton(funcion,semilla,tolerancia=0.01):
@@ -51,15 +47,17 @@ def newton(funcion,semilla,tolerancia=0.01):
   f = sp.lambdify(x,funcion)
   f_ = sp.lambdify(x,dx)
   xi = lambda: puntos[-1][0] - f(puntos[-1][0])/f_(puntos[-1][0])
-  puntos.append([xi(),abs(xi() - puntos[-1][0])/xi()])
+  puntos.append([xi(),abs((xi() - puntos[-1][0])/xi())])
   while (abs(puntos[-1][0] - puntos[-2][0]) > tolerancia):
-    puntos.append([xi(),abs(xi() - puntos[-2][0])/xi()])
+    puntos.append([xi(),abs((xi() - puntos[-2][0])/xi())])
   return puntos
 
 #Método de secante
 def secante(f,x_0,x_1,tolerancia=0.01):
-  puntos = [x_0,x_1]
-  xi = lambda: puntos[-1] - f(puntos[-1])*(puntos[-2] - puntos[-1])/(f(puntos[-2]) - f(puntos[-1]))
-  while (abs(puntos[-1] - puntos[-2]) >= tolerancia):
-    puntos.append(xi())
+  valores = [x_0,x_1]
+  xi = lambda: valores[-1] - f(valores[-1])*(valores[-2] - valores[-1])/(f(valores[-2]) - f(valores[-1]))
+  puntos = [[xi(),'-']]
+  while (abs(valores[-1] - valores[-2]) >= tolerancia):
+    valores.append(xi())
+    puntos.append([xi(),abs((xi()-puntos[-1])/xi())])
   return puntos
