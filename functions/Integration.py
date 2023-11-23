@@ -1,7 +1,13 @@
+import sympy as sp
+
+x = sp.symbols('x')
+
+
 def trapecio(f,a,b,n):
+  f = sp.lambdify(x,f)
   h = (b-a)/n
   suma = 0
-  for i in range(1,n):
+  for i in range(1,int(n)):
     suma+=f(a+i*h)
   I = h/2*(f(a) +2*suma +f(b))
   return I
