@@ -99,7 +99,7 @@ class CBiseccion(AZeros):
   def __init__(self, parent, controller, orden=1):
     squares = ["f","a","b","t"]
     super().__init__(parent, controller, orden,squares)  
-    
+
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_biseccion())  
     execute.grid(row=4, column=0, padx=10, pady=5)  
     

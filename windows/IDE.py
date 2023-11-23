@@ -1,10 +1,10 @@
 import tkinter as tk
-from functions.Edo import *
+from functions.DE import *
 from sympy import symbols,lambdify,exp,log
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-class AEdo(tk.Frame):
+class DE(tk.Frame):
   def __init__(self, parent, controller,orden=0,cuadros=0):
     super().__init__(parent)
     self.configure(background = "blue")
@@ -27,21 +27,18 @@ class AEdo(tk.Frame):
   def show_result(self,grafica):    
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
-
     imagen_tk = ImageTk.PhotoImage(grafica)
-
     label_imagen = tk.Label(top, image=imagen_tk)
     label_imagen.pack() 
-    
-    
-class CEuler(AEdo):
+
+
+class CEuler(DE):
   def __init__(self, parent, controller, orden=0, cuadros=0):
     cuadros = ["f","a","b","h","co"]
     super().__init__(parent, controller, orden, cuadros)
-    ultima_fila = self.grid_size()[1] - 1
-    print(ultima_fila)
+    last_row = self.grid_size()[1] - 1
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_euler())  
-    execute.grid(row=ultima_fila+1, column=0, padx=2, pady=5) 
+    execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
     
   def graficar(self,t,P):
     # P=np.array(P)
@@ -82,7 +79,7 @@ class CEuler(AEdo):
       #   , float(self.entries[3].get()), float(self.entries[4].get()))
       grafica = self.graficar(tiempo,matriz)
       self.show_result(grafica)  
-      # ultima_fila = self.grid_size()[1] - 1
+      # last_row = self.grid_size()[1] - 1
     except Exception as e:
       print(e) 
     
