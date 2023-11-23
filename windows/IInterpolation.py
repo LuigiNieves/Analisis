@@ -3,6 +3,7 @@ from functions.Interpolation import *
 from sympy import symbols,lambdify,exp,log
 from tkinter import ttk
 from PIL import Image, ImageTk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class AInterpolation(tk.Frame):
@@ -26,15 +27,17 @@ class AInterpolation(tk.Frame):
   def show_result(self,value):    
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
-    imagen = Image.open('img.png')
-    imagen_tk = ImageTk.PhotoImage(imagen)
+    # imagen = Image.open('img.png')
+    # imagen_tk = ImageTk.PhotoImage(imagen)
 
-    label_new = tk.Label(top,text=value)
-    label_new.pack()
+    # label_new = tk.Label(top,text=value)
+    # label_new.pack()
 
-    label_imagen = tk.Label(top,image=imagen_tk)
-    label_imagen.pack()
-
+    # label_imagen = tk.Label(top,image=imagen_tk)
+    # label_imagen.pack()
+    canvas = FigureCanvasTkAgg(self.fig, master=top)
+    canvas.draw()
+    canvas.get_tk_widget().pack()
     
 
 class CMinimos(AInterpolation):
@@ -63,14 +66,14 @@ class CMinimos(AInterpolation):
         return False   
     
   def graph(self,x,y,f):
-    plt.figure(figsize=(6, 4))
+    self.fig=plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Originales')
     plt.plot(x,[f(i) for i in x],label='Minimos cuadrados')
     plt.title('Gráfica de ejemplo')
     plt.xlabel('Eje X')
     plt.ylabel('Eje Y')
     plt.grid()
-    plt.savefig('img.png')
+    # plt.savefig('img.png')
     plt.legend()
     plt.close()
 
