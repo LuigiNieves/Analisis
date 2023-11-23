@@ -53,7 +53,6 @@ class CTrapeze(AIntegration):
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_trapecio())  
     execute.grid(row=last_row+2, column=0, padx=2, pady=5)
 
-  
   def solve_trapecio(self):
     x = sp.symbols('x')
     try:

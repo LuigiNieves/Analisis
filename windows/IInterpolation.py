@@ -64,8 +64,7 @@ class CMinimos(AInterpolation):
     except Exception as e:
       print(e) 
 
-
-  
+      
   def graph(self,x,y,f):
     fig=plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Puntos Observados')
@@ -106,7 +105,6 @@ class CPsimple(AInterpolation):
     try:
       xdata = [float(i) for i in self.entries[0].get().split(' ') if isNumeric(i)]
       ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
-
       P,f = p_simple(xdata,ydata)  
       self.result.config(text=P)
     except Exception as e:
