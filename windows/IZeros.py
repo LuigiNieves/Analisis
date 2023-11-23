@@ -16,18 +16,13 @@ class Home(tk.Frame):
     """ crear botones b o Cancelar""" 
     pass
 
-# class Caja(tk.Frame):
-#   def __init__(self, parent, controller):
-#     super().__init__(parent)
-#     self.configure(background = "blue")
-#     self.controller =controller 
   
 class AZeros(tk.Frame):
   def __init__(self, parent, controller,orden=0,cuadros=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
-    self.orden = orden
+    # self.orden = orden
     self.cuadros =  cuadros
     self.entries =[]
     self.widget()
@@ -122,14 +117,13 @@ class CFalsaPosicion(AZeros):
     cuadros = ["f","a","b","t"]
     super().__init__(parent, controller, orden,cuadros)  
     
-    execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_Fal())  
+    execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_falsaPosicion())  
     execute.grid(row=4, column=0, padx=10, pady=5)     
   
-  def solve_biseccion(self): 
-    print(len(self.entries))
+  def solve_falsaPosicion(self): 
     try:
       x=symbols('x')
-      a = biseccion(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
+      a = falsa_posicion(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()) , float(self.entries[3].get()))
       print(a)
       self.show_result(a)
     except Exception as e:

@@ -1,5 +1,6 @@
 import tkinter as tk
 from windows.IZeros import Home, CNewton, CBiseccion, CFalsaPosicion, CSecante
+from windows.IEdo import CEuler
 from tkinter import Menu
 
 class Admin(tk.Tk):
@@ -17,7 +18,7 @@ class Admin(tk.Tk):
     container.grid_rowconfigure(0,weight=1)
 
     self.frames={}
-    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante):
+    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante,CEuler):
         frame=F(container,self)
         self.frames[F]=frame
         frame.grid(row=0, column=0, sticky =tk.NSEW)
@@ -45,7 +46,7 @@ class Admin(tk.Tk):
     sub_menu_ceros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(CSecante))
 
     sub_menu_curvas = tk.Menu(self.menu_juego,tearoff=0)
-    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"))
+    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"),command=lambda:self.show_frame(CEuler))
     sub_menu_curvas.add_command(label="Runge Kutta",font=("Arial","10"))
 
     sub_menu_interpolacion = tk.Menu(self.menu_juego,tearoff=0)
@@ -54,7 +55,7 @@ class Admin(tk.Tk):
     sub_menu_interpolacion.add_command(label="Minimos Cuadrados",font=("Arial","10"))
     
     self.menu_juego.add_cascade(label="Ceros", menu = sub_menu_ceros )  
-    self.menu_juego.add_cascade(label="Curvas", menu = sub_menu_curvas )  
+    self.menu_juego.add_cascade(label="EDO", menu = sub_menu_curvas )  
     self.menu_juego.add_cascade(label="Interpolacion", menu = sub_menu_interpolacion)  
 
     self.menu_juego.add_command(label="Salir",font=("Arial","10"),command = self.salir_ventana)

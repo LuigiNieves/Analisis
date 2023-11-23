@@ -12,29 +12,30 @@ def biseccion(f,a,b,tolerancia=1E-6 ):
   if f(a)*f(b) > 0:
     return 'No cumple el teorema'
   c = (a+b)/2
-  puntos = [[c,abs((b-a)/b)]]
+  puntos = [[c,abs((b-a))]]
   while abs(b - a) >= tolerancia:
     c = (a+b)/2
     if f(a)*f(c) < 0:
       b=c
     else:
       a=c
-    puntos.append([c,abs((b-a)/b)])
+    puntos.append([c,abs((b-a))])
   return puntos
 
 # Método de falsa posición
 def falsa_posicion(f,a,b,tolerancia = 0.01):
+  f = sp.lambdify(x,f)    
   if (f(a)*f(b)) > 0 :
     return 'No hay raices'
   c = a - ((f(a)*(a-b))/(f(a)-f(b)))
-  puntos = [[c , f(c)]]
+  puntos = [[c , abs(f(c))]]
   while abs(f(c)) >= tolerancia:
     c = a - ((f(a)*(a-b))/(f(a)-f(b)))
     if f(a)*f(c) < 0:
       b=c
     else:
       a=c
-    puntos.append([c,f(c)])
+    puntos.append([c,abs(f(c))])
   return puntos
 
 #Método de Newton
@@ -55,10 +56,11 @@ def newton(funcion,semilla,tolerancia=0.01):
 
 #Método de secante
 def secante(f,x_0,x_1,tolerancia=0.01):
+  f = sp.lambdify(x,f)   
   valores = [x_0,x_1]
   xi = lambda: valores[-1] - f(valores[-1])*(valores[-2] - valores[-1])/(f(valores[-2]) - f(valores[-1]))
   puntos = [[xi(),'-']]
   while (abs(valores[-1] - valores[-2]) >= tolerancia):
     valores.append(xi())
-    puntos.append([xi(),abs((xi()-puntos[-1])/xi())])
+    puntos.append([xi(),abs((xi()-puntos[-1][0]))])
   return puntos
