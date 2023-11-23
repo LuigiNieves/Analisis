@@ -6,17 +6,17 @@ from PIL import Image, ImageTk
 
 
 class AInterpolation(tk.Frame):
-  def __init__(self, parent, controller,orden=0,cuadros=0):
+  def __init__(self, parent, controller,order=0,squares=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
-    # self.orden = orden
-    self.cuadros = cuadros
+    # self.order = order
+    self.squares = squares
     self.entries =[]
     self.widget()
 
   def widget(self):
-    for idx, label_text in enumerate(self.cuadros):
+    for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text, width=3)
       label.grid(row=idx, column=0, padx=1, pady=1)
       entry = tk.Entry(self, width=65)
@@ -38,9 +38,9 @@ class AInterpolation(tk.Frame):
     
 
 class CMinimos(AInterpolation):
-  def __init__(self, parent, controller, orden=0, cuadros=0):
-    cuadros = ["xdata","ydata"]
-    super().__init__(parent, controller, orden, cuadros)
+  def __init__(self, parent, controller, order=0, squares=0):
+    squares = ["xdata","ydata"]
+    super().__init__(parent, controller, order, squares)
     ultima_fila = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
@@ -52,7 +52,7 @@ class CMinimos(AInterpolation):
     # xdata = [float(i) for i in [1,2,3,4,5] if self.isNumeric(i)]
     # ydata = [float(i) for i in [9,19,82,101,200] if self.isNumeric(i)]
     
-    # self.graficar(xdata,ydata)
+    # self.graph(xdata,ydata)
     # self.show_result()
   
   def isNumeric(self,s):
@@ -62,7 +62,7 @@ class CMinimos(AInterpolation):
     except ValueError:
         return False   
     
-  def graficar(self,x,y,f):
+  def graph(self,x,y,f):
     plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Originales')
     plt.plot(x,[f(i) for i in x],label='Minimos cuadrados')
@@ -79,17 +79,18 @@ class CMinimos(AInterpolation):
     try:
       xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
       ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
-      a0,a1,f = minimos_cuadrados(xdata,ydata)  
-      self.graficar(xdata,ydata,f)
+      a0,a1,f = minimos_cuadrados(xdata,ydata) 
+      self.result.config(text=f'{a0} + ({a1})*x') 
+      self.graph(xdata,ydata,f)
       self.show_result(f'{a0} + ({a1})*x')
     except Exception as e:
       print(e) 
 
     
 class CPsimple(AInterpolation):
-  def __init__(self, parent, controller, orden=0, cuadros=0):
-    cuadros = ["xdata","ydata"]
-    super().__init__(parent, controller, orden, cuadros)
+  def __init__(self, parent, controller, order=0, squares=0):
+    squares = ["xdata","ydata"]
+    super().__init__(parent, controller, order, squares)
     ultima_fila = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
@@ -111,7 +112,38 @@ class CPsimple(AInterpolation):
       xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
       ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
     
-      polinomioS,P = p_simple(xdata,ydata)  
+      P,f = p_simple(xdata,ydata)  
       self.result.config(text=P)
     except Exception as e:
       print(e)   
+
+
+class CLagrange(AInterpolation):
+  def __init__(self, parent, controller, order=0, squares=0):
+    squares = ["xdata","ydata"]
+    super().__init__(parent, controller, order, squares)
+    ultima_fila = self.grid_size()[1] - 1
+    
+    self.result = tk.Label(self, text="" , width=65, wraplength=200)
+    self.result.grid(row=ultima_fila+1, column=1, padx=1, pady=1,sticky='nsew' )
+    
+    execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_Psimple())  
+    execute.grid(row=ultima_fila+2, column=0, padx=2, pady=5) 
+    
+
+  def isNumeric(self,s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False  
+      
+  def solve_Psimple(self): 
+    try:
+      xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
+      ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
+    
+      P,f = lagrange(xdata,ydata)  
+      self.result.config(text=P)
+    except Exception as e:
+      print(e) 

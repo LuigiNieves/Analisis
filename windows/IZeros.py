@@ -9,7 +9,7 @@ class Home(tk.Frame):
     super().__init__(parent)
     # self.configure(background = style.BACKGROUND)
     self.controller =controller
-    self.gameMode = tk.StringVar(self, value="normal")
+    self.game_mode = tk.StringVar(self, value="normal")
     self.crearwidgets()
       
   def crearwidgets(self):
@@ -18,17 +18,17 @@ class Home(tk.Frame):
 
   
 class AZeros(tk.Frame):
-  def __init__(self, parent, controller,orden=0,cuadros=0):
+  def __init__(self, parent, controller,orden=0,squares=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
     # self.orden = orden
-    self.cuadros =  cuadros
+    self.squares =  squares
     self.entries =[]
     self.widget()
     
   def widget(self):
-    for idx, label_text in enumerate(self.cuadros):
+    for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text)
       label.grid(row=idx, column=0, padx=10, pady=5)
       entry = tk.Entry(self)
@@ -61,8 +61,8 @@ class AZeros(tk.Frame):
 
 class CNewton(AZeros):
   def __init__(self, parent, controller, orden=0):
-    cuadros = ["f","a","t"]
-    super().__init__(parent, controller, orden,cuadros)
+    squares = ["f","a","t"]
+    super().__init__(parent, controller, orden,squares)
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_newton())  
     execute.grid(row=4, column=0, padx=10, pady=5) 
@@ -79,8 +79,8 @@ class CNewton(AZeros):
 
 class CSecante(AZeros):
   def __init__(self, parent, controller, orden=1):
-    cuadros = ["f","a","b","t"]
-    super().__init__(parent, controller, orden,cuadros)  
+    squares = ["f","a","b","t"]
+    super().__init__(parent, controller, orden,squares)  
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_secante())  
     execute.grid(row=4, column=0, padx=10, pady=5) 
@@ -97,8 +97,8 @@ class CSecante(AZeros):
     
 class CBiseccion(AZeros):
   def __init__(self, parent, controller, orden=1):
-    cuadros = ["f","a","b","t"]
-    super().__init__(parent, controller, orden,cuadros)  
+    squares = ["f","a","b","t"]
+    super().__init__(parent, controller, orden,squares)  
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_biseccion())  
     execute.grid(row=4, column=0, padx=10, pady=5)  
@@ -114,8 +114,8 @@ class CBiseccion(AZeros):
      
 class CFalsaPosicion(AZeros):
   def __init__(self, parent, controller, orden=1):
-    cuadros = ["f","a","b","t"]
-    super().__init__(parent, controller, orden,cuadros)  
+    squares = ["f","a","b","t"]
+    super().__init__(parent, controller, orden,squares)  
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_falsaPosicion())  
     execute.grid(row=4, column=0, padx=10, pady=5)     

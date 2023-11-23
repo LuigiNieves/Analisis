@@ -30,7 +30,7 @@ def p_simple(xdata,ydata):
   ai = np.linalg.solve(M,ydata)
   for i in range(N):
     P = P+ai[i]*X**i
-  return sp.lambdify(X,P),P
+  return P,sp.lambdify(X,P)
 
 
 def lagrange(xdata,ydata):
@@ -42,8 +42,7 @@ def lagrange(xdata,ydata):
       if j!=i:
         T = T*(X-xdata[j])/(xdata[i]-xdata[j])
     P = P + T*ydata[i]
-  print('El polinomio interpolante es : P(X)=' ,P)
-  return sp.lambdify(X,P)
+  return P,sp.lambdify(X,P)
 
 def graficas9(x,y):
   plt.subplots_adjust(left=None, bottom=None,right=None,top=None,wspace=None,hspace=0.5)

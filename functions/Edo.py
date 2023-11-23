@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sympy as sy
 
-
-
 def Euler(f,a,b,h,co):
   n=int((b-a)/h)
   t=np.linspace(a,b,n+1)
