@@ -52,9 +52,20 @@ class CMinimos(AInterpolation):
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_minimos())  
     execute.grid(row=last_row+2, column=0, padx=2, pady=5)
 
+    execute_graph = tk.Button(self,text="Modelos",command=lambda:self.graph_9())  
+    execute_graph.grid(row=last_row+3, column=0, padx=2, pady=5)
   
-   
-    
+  def graph_9(self):
+    try:
+      xdata = [float(i) for i in self.entries[0].get().split(' ') if isNumeric(i)]
+      ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
+      graph = graficas9(xdata,ydata)
+      self.show_result(graph)
+    except Exception as e:
+      print(e) 
+
+
+  
   def graph(self,x,y,f):
     fig=plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Puntos Observados')
@@ -65,9 +76,7 @@ class CMinimos(AInterpolation):
     plt.grid()
     plt.legend()
     plt.close()
-    
     return fig
-
 
   def solve_minimos(self): 
     try:
@@ -118,8 +127,8 @@ class CLagrange(AInterpolation):
       
   def solve_Psimple(self): 
     try:
-      xdata = [float(i) for i in self.entries[0].get().split(' ') if self.isNumeric(i)]
-      ydata = [float(i) for i in self.entries[1].get().split(' ') if self.isNumeric(i)]
+      xdata = [float(i) for i in self.entries[0].get().split(' ') if isNumeric(i)]
+      ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
     
       P,f = lagrange(xdata,ydata)  
       self.result.config(text=P)
