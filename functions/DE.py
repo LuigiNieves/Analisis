@@ -1,7 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
-import sympy as sy
 
 def Euler(f,a,b,h,co):
   n=int((b-a)/h)

@@ -2,7 +2,6 @@ import sympy as sp
 
 x = sp.symbols('x')
 
-
 def trapecio(f,a,b,n):
   f = sp.lambdify(x,f)
   h = (b-a)/n

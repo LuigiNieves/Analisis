@@ -3,7 +3,7 @@ from tkinter import messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from functions.Integration import *
 import sympy as sp
-from sympy import sin,cos,exp,log,tan
+from sympy import exp,log,sin,cos,tan,cot,sec,csc
 import numpy as np
 import matplotlib.pyplot as plt
 

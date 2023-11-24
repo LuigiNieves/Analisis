@@ -1,7 +1,6 @@
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
-from PIL import Image, ImageTk
 
 X=sp.symbols('X')
 

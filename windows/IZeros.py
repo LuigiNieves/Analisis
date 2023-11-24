@@ -1,6 +1,6 @@
 import tkinter as tk
 from functions.Zeros import *
-from sympy import symbols,lambdify,exp,log
+from sympy import symbols,exp,log,sin,cos,tan,cot,sec,csc
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -11,11 +11,10 @@ class Home(tk.Frame):
     super().__init__(parent)
     self.controller =controller
     self.game_mode = tk.StringVar(self, value="normal")
-    self.crearwidgets()
+
+    tk.Label(self, text='En este software usted tendrá la posibilidad de realizar casi cualquier problema que haya encontrado en la materia de análisis númerico, por medio del menu posicionado en la parte superior izquierda usted podra navegar por los diferentes métodos númericos, por favor haga caso omiso a las instrucciones en cada uno de los métodos para su perfecto funcionamiento, use por favor solo la variable x en minúscula para representar los símbolos en las ecuaciones, en algunos casos tendrá que usar la variable t en mínuscula para representar el tiempo. Siga las instrucciones en cada apartado del programa y este funcionará de maravilla, muchas gracias por usar nuestro software !!!', wraplength=200).pack()
       
-  def crearwidgets(self):
-    """ crear botones b o Cancelar""" 
-    pass
+      
 
   
 class AZeros(tk.Frame):

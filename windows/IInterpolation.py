@@ -1,8 +1,6 @@
 import tkinter as tk
 from functions.Interpolation import *
-from sympy import symbols,lambdify,exp,log,sqrt
-from tkinter import ttk
-from PIL import Image, ImageTk
+from sympy import exp,log,sin,cos,tan,cot,sec,csc
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
 

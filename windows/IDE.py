@@ -1,10 +1,10 @@
 import tkinter as tk
 from functions.DE import *
-from sympy import symbols,lambdify,exp,log,lambdify
-from tkinter import ttk
-from PIL import Image, ImageTk
+from sympy import symbols,lambdify,exp,log,sin,cos,tan,cot,sec,csc
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
+import matplotlib.pyplot as plt
+
 
 class DE(tk.Frame):
   def __init__(self, parent, controller,cuadros=0):
