@@ -4,6 +4,8 @@ from sympy import symbols,lambdify,exp,log,sqrt
 from tkinter import ttk
 from functions.Taylor import Taylor,Cota_t
 from sympy import sin,cos,tan
+from tkinter import messagebox
+
 
 
 class AZeros(tk.Frame):
@@ -68,7 +70,7 @@ class CTaylor(AZeros):
       p = Taylor(f,x0,n)
       self.result.config(text=f'El polinomio de grado {n} es {p}')
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)  
 
 class CCota(AZeros):
   def __init__(self, parent, controller, orden=0):
@@ -90,6 +92,6 @@ class CCota(AZeros):
       p = Cota_t(f,x_,n,x0)
       self.result.config(text=f'La cota es {p}')
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)  
   
   

@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 def isNumeric(s):
     try:
         float(s)
@@ -80,7 +81,7 @@ class CTrapeze(AIntegration):
       graph = self.graph(f,a,b,n)
       self.show_result(graph)
     except Exception as e:
-      print(e)
+      messagebox.showinfo("Error",e)  
       
       
 class CTrapezePuntos(AIntegration):
@@ -107,7 +108,7 @@ class CTrapezePuntos(AIntegration):
         graph = self.graph_trapecio_datos(xdata,ydata)
         self.show_result(graph)
     except Exception as e:
-      print(e)    
+      messagebox.showinfo("Error",e)      
 
 class CSimpson13(AIntegration):
   def __init__(self, parent, controller, squares=0):
@@ -131,7 +132,6 @@ class CSimpson13(AIntegration):
       graph = self.graph(f,a,b,n)
       self.show_result(graph)
     except Exception as e:
-      print(e)
       messagebox.showinfo("Error",e)
       
       
@@ -157,6 +157,5 @@ class CSimpson38(AIntegration):
       graph = self.graph(f,a,b,n)
       self.show_result(graph)
     except Exception as e:
-      print(e)
       messagebox.showinfo("Error",e)    
       

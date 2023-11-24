@@ -4,6 +4,8 @@ from sympy import symbols,lambdify,exp,log,sqrt
 from tkinter import ttk
 from PIL import Image, ImageTk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from tkinter import messagebox
+
 
 def isNumeric(s):
     try:
@@ -34,7 +36,6 @@ class AInterpolation(tk.Frame):
   def show_result(self,graph):    
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
-    
     canvas = FigureCanvasTkAgg(graph, master=top)
     canvas.draw()
     canvas.get_tk_widget().pack()
@@ -58,8 +59,6 @@ class CMinimos(AInterpolation):
     self.model_entry = tk.Entry(self, width=15)
     self.model_entry.grid(row=last_row+3, column=1, padx=2, pady=5, sticky="w")
 
-   
-  
   def graph_9(self):
     try:
       xdata = [float(i) for i in self.entries[0].get().split(' ') if isNumeric(i)]
@@ -67,16 +66,16 @@ class CMinimos(AInterpolation):
       graph = graficas9(xdata,ydata)
       self.show_result(graph)
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)    
 
-      
+
   def graph(self,x,y,f):
     fig=plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Puntos Observados')
-    plt.plot(x,[f(i) for i in x],label='Minimos cuadrados')
-    plt.title('Gráfica de ejemplo')
-    plt.xlabel('Eje X')
-    plt.ylabel('Eje Y')
+    plt.plot(x,[f(i) for i in x],label='Mínimos cuadrados')
+    plt.title('Gráfica de mínimos cuadrados')
+    plt.xlabel('X')
+    plt.ylabel('Y')
     plt.grid()
     plt.legend()
     plt.close()
@@ -88,12 +87,11 @@ class CMinimos(AInterpolation):
       ydata = [float(i) for i in self.entries[1].get().split(' ') if isNumeric(i)]
       a0,a1,f = minimos_cuadrados(xdata,ydata) 
       
-      
       self.result.config(text=f'{a0} + ({a1})*x') 
       graph = self.graph(xdata,ydata,f)
       self.show_result(graph)
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)   
 
     
 class CPsimple(AInterpolation):
@@ -115,7 +113,7 @@ class CPsimple(AInterpolation):
       P,f = p_simple(xdata,ydata)  
       self.result.config(text=P)
     except Exception as e:
-      print(e)   
+      messagebox.showinfo("Error",e)  
 
 
 class CLagrange(AInterpolation):
@@ -137,4 +135,4 @@ class CLagrange(AInterpolation):
       P,f = lagrange(xdata,ydata)  
       self.result.config(text=P)
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)   

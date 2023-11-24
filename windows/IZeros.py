@@ -2,6 +2,8 @@ import tkinter as tk
 from functions.Zeros import *
 from sympy import symbols,lambdify,exp,log
 from tkinter import ttk
+from tkinter import messagebox
+
 
 
 class Home(tk.Frame):
@@ -46,8 +48,8 @@ class AZeros(tk.Frame):
     for dato, descripcion in data:
       tree.insert("", "end", values=(dato, descripcion))
     
-    tree.tag_configure('oddrow', background='#F0F0F0')  # Color para filas impares
-    tree.tag_configure('evenrow', background='white')  # Color para filas pares
+    tree.tag_configure('oddrow', background='#F0F0F0') 
+    tree.tag_configure('evenrow', background='white')  
     for i, item in enumerate(tree.get_children()):
       if i % 2 == 0:
           tree.item(item, tags=('evenrow',))
@@ -89,7 +91,7 @@ class CSecante(AZeros):
       print(a)
       self.show_result(a)
     except Exception as e:
-      print(e)    
+      messagebox.showinfo("Error",e)  
     
 class CBiseccion(AZeros):
   def __init__(self, parent, controller):
@@ -106,7 +108,7 @@ class CBiseccion(AZeros):
       print(a)
       self.show_result(a)
     except Exception as e:
-      print(e)     
+      messagebox.showinfo("Error",e)      
      
 class CFalsaPosicion(AZeros):
   def __init__(self, parent, controller):
@@ -123,5 +125,5 @@ class CFalsaPosicion(AZeros):
       print(a)
       self.show_result(a)
     except Exception as e:
-      print(e)   
+      messagebox.showinfo("Error",e)   
           

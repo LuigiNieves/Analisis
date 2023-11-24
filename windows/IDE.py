@@ -4,13 +4,13 @@ from sympy import symbols,lambdify,exp,log,lambdify
 from tkinter import ttk
 from PIL import Image, ImageTk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from tkinter import messagebox
 
 class DE(tk.Frame):
   def __init__(self, parent, controller,cuadros=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
-    # self.orden = orden
     self.cuadros =  cuadros
     self.entries =[]
     self.widget()
@@ -28,10 +28,10 @@ class DE(tk.Frame):
   def graph(self,x,y):
     fig = plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o')
-    plt.title('Gráfica de ejemplo')
-    plt.xlabel('Eje X')
-    plt.ylabel('Eje Y')
-    plt.grid(True)
+    plt.title('Gráfica')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.grid()
     plt.close()
     return fig
     
@@ -61,7 +61,7 @@ class CEuler(DE):
       grafica = self.graph(t,points)
       self.show_result(grafica)  
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)  
 
 
 class CRunge(DE):
@@ -81,7 +81,7 @@ class CRunge(DE):
       grafica = self.graph(t,points)
       self.show_result(grafica)  
     except Exception as e:
-      print(e) 
+      messagebox.showinfo("Error",e)  
     
   
       
