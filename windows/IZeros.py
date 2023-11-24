@@ -18,7 +18,6 @@ class AZeros(tk.Frame):
   def create_instructions(self,text):
     tk.Label(self,text=f'{text}, puede utilizar las siguientes nomenclaturas (exp,log,sin,cos,tan,cot,sec,csc,pi), utilice solo x (mínuscula) como variable, recuerde las reglas de los métodos', wraplength=700,justify='left').grid(row=0, column=0, padx=1, pady=1, sticky='ew',columnspan=4)
     
-
   def widget(self):
     for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text, width=3,)

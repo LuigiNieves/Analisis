@@ -58,8 +58,6 @@ class CMinimos(AInterpolation):
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_minimos())  
     execute.grid(row=last_row+3, column=0, padx=2, pady=5)
     
-    self.model_entry = tk.Entry(self, width=15)
-    self.model_entry.grid(row=last_row+3, column=1, padx=2, pady=5, sticky="w")
 
   def graph_9(self):
     try:
