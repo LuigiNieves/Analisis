@@ -1,28 +1,30 @@
 import tkinter as tk
 from functions.DE import *
-from sympy import symbols,lambdify,exp,log,sin,cos,tan,cot,sec,csc
+from sympy import symbols,lambdify,exp,log,sin,cos,tan,cot,sec,csc,pi
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 
 
 class DE(tk.Frame):
-  def __init__(self, parent, controller,cuadros=0):
+  def __init__(self, parent, controller,squares=0):
     super().__init__(parent)
-    self.configure(background = "blue")
+    self.configure(background = "alice blue")
     self.controller =controller  
-    self.cuadros =  cuadros
+    self.squares =  squares
     self.entries =[]
     self.widget()
+
+  
+  def create_instructions(self,text):
+    tk.Label(self,text=f'{text}, puede utilizar las siguientes nomenclaturas (exp,log,sin,cos,tan,cot,sec,csc,pi), utilice solo x (mínuscula) como variable, recuerde las reglas de los métodos, solo utilice de primer grado', wraplength=700,justify='left').grid(row=0, column=0, padx=1, pady=1, sticky='ew',columnspan=4)
     
   def widget(self):
-    for idx, label_text in enumerate(self.cuadros):
+    for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text, width=3,)
-      label.grid(row=idx, column=0, padx=1, pady=1, sticky='ew')
-      
+      label.grid(row=idx+1, column=0, padx=1, pady=1, sticky='ew')
       entry = tk.Entry(self, width=45)
-      entry.grid(row=idx, column=1, padx=1, pady=1, sticky='w')
-    
+      entry.grid(row=idx+1, column=1, padx=1, pady=1, sticky='w')
       self.entries.append(entry)
 
   def graph(self,x,y):
@@ -44,12 +46,14 @@ class DE(tk.Frame):
 
 
 class CEuler(DE):
-  def __init__(self, parent, controller, cuadros=0):
-    cuadros = ["f","a","b","h","co"]
-    super().__init__(parent, controller, cuadros)
+  def __init__(self, parent, controller, squares=0):
+    squares = ["f","a","b","h","co"]
+    super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_euler())  
     execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
+
+    self.create_instructions('Euler')
     
     
   def solve_euler(self): 
@@ -65,12 +69,15 @@ class CEuler(DE):
 
 
 class CRunge(DE):
-  def __init__(self, parent, controller, cuadros=0):
-    cuadros = ["f","a","b","h","co"]
-    super().__init__(parent, controller, cuadros)
+  def __init__(self, parent, controller, squares=0):
+    squares = ["f","a","b","h","co"]
+    super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_runge())  
     execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
+
+    self.create_instructions('Runge Kutta')
+
     
   def solve_runge(self): 
     try:

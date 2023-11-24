@@ -1,38 +1,30 @@
 import tkinter as tk
 from functions.Zeros import *
-from sympy import symbols,exp,log,sin,cos,tan,cot,sec,csc
+from sympy import symbols,exp,log,sin,cos,tan,cot,sec,csc,pi
 from tkinter import ttk
 from tkinter import messagebox
 
-
-
-class Home(tk.Frame):
-  def __init__(self,parent,controller):
-    super().__init__(parent)
-    self.controller =controller
-    self.game_mode = tk.StringVar(self, value="normal")
-
-    tk.Label(self, text='En este software usted tendrá la posibilidad de realizar casi cualquier problema que haya encontrado en la materia de análisis númerico, por medio del menu posicionado en la parte superior izquierda usted podra navegar por los diferentes métodos númericos, por favor haga caso omiso a las instrucciones en cada uno de los métodos para su perfecto funcionamiento, use por favor solo la variable x en minúscula para representar los símbolos en las ecuaciones, en algunos casos tendrá que usar la variable t en mínuscula para representar el tiempo. Siga las instrucciones en cada apartado del programa y este funcionará de maravilla, muchas gracias por usar nuestro software !!!', wraplength=200).pack()
-      
-      
-
-  
+    
 class AZeros(tk.Frame):
   def __init__(self, parent, controller,squares=0):
     super().__init__(parent)
-    self.configure(background = "blue")
+    self.configure(background = "alice blue")
     self.controller =controller  
     self.squares =  squares
     self.entries =[]
     self.widget()
+  
+
+  def create_instructions(self,text):
+    tk.Label(self,text=f'{text}, puede utilizar las siguientes nomenclaturas (exp,log,sin,cos,tan,cot,sec,csc,pi), utilice solo x (mínuscula) como variable, recuerde las reglas de los métodos', wraplength=700,justify='left').grid(row=0, column=0, padx=1, pady=1, sticky='ew',columnspan=4)
     
+
   def widget(self):
     for idx, label_text in enumerate(self.squares):
-      label = tk.Label(self, text=label_text)
-      label.grid(row=idx, column=0, padx=1, pady=1,sticky='ew')
-      entry = tk.Entry(self)
-      entry.grid(row=idx, column=1, padx=1, pady=1, sticky='w') 
-    
+      label = tk.Label(self, text=label_text, width=3,)
+      label.grid(row=idx+1, column=0, padx=1, pady=1, sticky='ew')
+      entry = tk.Entry(self, width=45)
+      entry.grid(row=idx+1, column=1, padx=1, pady=1, sticky='w')
       self.entries.append(entry)
     
   def show_result(self,data):    
@@ -63,7 +55,10 @@ class CNewton(AZeros):
     super().__init__(parent, controller,squares)
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_newton())  
-    execute.grid(row=4, column=0, padx=10, pady=5) 
+    execute.grid(row=5, column=0, padx=10, pady=5) 
+    self.create_instructions('Newton')
+
+
     
   def solve_newton(self): 
     try:
@@ -78,10 +73,11 @@ class CSecante(AZeros):
   def __init__(self, parent, controller):
     squares = ["f","a","b","t"]
     super().__init__(parent, controller,squares)  
-    
+
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_secante())  
-    execute.grid(row=4, column=0, padx=10, pady=5) 
-    
+    execute.grid(row=5, column=0, padx=10, pady=5) 
+    self.create_instructions('Secante')
+
     
   def solve_secante(self): 
     try:
@@ -95,10 +91,12 @@ class CSecante(AZeros):
 class CBiseccion(AZeros):
   def __init__(self, parent, controller):
     squares = ["f","a","b","t"]
-    super().__init__(parent, controller,squares)  
+    super().__init__(parent, controller,squares) 
+    self.create_instructions('Bisección')
+
 
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_biseccion())  
-    execute.grid(row=4, column=0, padx=10, pady=5)  
+    execute.grid(row=5, column=0, padx=10, pady=5)  
     
   def solve_biseccion(self): 
     try:
@@ -113,9 +111,12 @@ class CFalsaPosicion(AZeros):
   def __init__(self, parent, controller):
     squares = ["f","a","b","t"]
     super().__init__(parent, controller,squares)  
-    
+
+    self.create_instructions('Falsa Posición')
+
+
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_falsaPosicion())  
-    execute.grid(row=4, column=0, padx=10, pady=5)     
+    execute.grid(row=5, column=0, padx=10, pady=5)     
   
   def solve_falsaPosicion(self): 
     try:

@@ -1,6 +1,6 @@
 import tkinter as tk
 from functions.Interpolation import *
-from sympy import exp,log,sin,cos,tan,cot,sec,csc
+from sympy import exp,log,sin,cos,tan,cot,sec,csc,pi
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
 
@@ -16,19 +16,21 @@ def isNumeric(s):
 class AInterpolation(tk.Frame):
   def __init__(self, parent, controller,squares=0):
     super().__init__(parent)
-    self.configure(background = "blue")
+    self.configure(background = "alice blue")
     self.controller =controller  
     self.squares = squares
     self.entries =[]
     self.widget()
 
+  def create_instructions(self,text):
+    tk.Label(self,text=f'{text}, puede utilizar las siguientes nomenclaturas (exp,log,sin,cos,tan,cot,sec,csc,pi), utilice solo x (mínuscula) como variable, recuerde las reglas de los métodos, recuerde que el tamaño de los xdata y ydata deben ser iguales', wraplength=700,justify='left').grid(row=0, column=0, padx=1, pady=1, sticky='ew',columnspan=4)
+
   def widget(self):
     for idx, label_text in enumerate(self.squares):
-      label = tk.Label(self, text=label_text, width=3)
-      label.grid(row=idx, column=0, padx=1, pady=1 ,sticky='ew')
-      
+      label = tk.Label(self, text=label_text, width=3,)
+      label.grid(row=idx+1, column=0, padx=1, pady=1, sticky='ew')
       entry = tk.Entry(self, width=45)
-      entry.grid(row=idx, column=1, padx=1, pady=1,sticky='w')
+      entry.grid(row=idx+1, column=1, padx=1, pady=1, sticky='w')
       self.entries.append(entry)
     
   def show_result(self,graph):    
@@ -44,6 +46,8 @@ class CMinimos(AInterpolation):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller,  squares)
     last_row = self.grid_size()[1] - 1
+
+    self.create_instructions('Mínimos Cuadrados')
     
     self.result = tk.Label(self, text="" , width=55, wraplength=200)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
@@ -97,6 +101,9 @@ class CPsimple(AInterpolation):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller,  squares)
     last_row = self.grid_size()[1] - 1
+
+    self.create_instructions('Polinomial Simple')
+
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
@@ -119,7 +126,9 @@ class CLagrange(AInterpolation):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
-    
+
+    self.create_instructions('Lagrange')
+
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
     

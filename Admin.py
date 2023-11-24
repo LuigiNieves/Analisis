@@ -1,10 +1,20 @@
 import tkinter as tk
 from tkinter import Menu
-from windows.IZeros import Home, CNewton, CBiseccion, CFalsaPosicion, CSecante
+from windows.IZeros import CNewton, CBiseccion, CFalsaPosicion, CSecante
 from windows.IInterpolation import CPsimple,CMinimos,CLagrange
 from windows.IIntegration import CTrapeze,CTrapezePuntos,CSimpson13,CSimpson38
 from windows.IDE import CEuler,CRunge
 from windows.ITaylor import CCota,CTaylor,CDifferentiation
+
+
+class Home(tk.Frame):
+  def __init__(self,parent,controller):
+    super().__init__(parent)
+    self.controller =controller
+    self.game_mode = tk.StringVar(self, value="normal")
+
+    tk.Label(self, text='En este software usted tendrá la posibilidad de realizar casi cualquier problema que haya encontrado en la materia de análisis númerico, por medio del menu posicionado en la parte superior izquierda usted podra navegar por los diferentes métodos númericos, por favor haga caso omiso a las instrucciones en cada uno de los métodos para su perfecto funcionamiento, use por favor solo la variable x en minúscula para representar los símbolos en las ecuaciones, en algunos casos tendrá que usar la variable t en mínuscula para representar el tiempo. Siga las instrucciones en cada apartado del programa y este funcionará de maravilla, muchas gracias por usar nuestro software !!!', wraplength=400,justify='left').pack(expand=True, fill=tk.BOTH)
+
 
 class Admin(tk.Tk):
   def __init__(self, *args, **kwargs):
@@ -30,11 +40,11 @@ class Admin(tk.Tk):
 
   def show_home(self,container):
       frame = self.frames[container]
-      frame.tkraise()   #las pone adelante  
+      frame.tkraise() 
   
   def show_frame(self,container): 
     frame = self.frames[container]
-    frame.tkraise()   #las pone adelante    
+    frame.tkraise()  
 
   def salir_ventana(self):
       self.destroy()    

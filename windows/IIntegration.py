@@ -3,7 +3,7 @@ from tkinter import messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from functions.Integration import *
 import sympy as sp
-from sympy import exp,log,sin,cos,tan,cot,sec,csc
+from sympy import exp,log,sin,cos,tan,cot,sec,csc,pi
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,19 +19,22 @@ def isNumeric(s):
 class AIntegration(tk.Frame):
   def __init__(self, parent, controller,squares=0):
     super().__init__(parent)
-    self.configure(background = "blue")
+    self.configure(background = "alice blue")
     self.controller =controller  
     self.squares =  squares
     self.entries =[]
     self.widget()
+
+  
+  def create_instructions(self,text):
+    tk.Label(self,text=f'{text}, puede utilizar las siguientes nomenclaturas (exp,log,sin,cos,tan,cot,sec,csc,pi), utilice solo x (mínuscula) como variable, recuerde las reglas de los métodos, recuerde que el tamaño de los xdata y ydata deben ser iguales', wraplength=700,justify='left').grid(row=0, column=0, padx=1, pady=1, sticky='ew',columnspan=4)
     
   def widget(self):
     for idx, label_text in enumerate(self.squares):
-      label = tk.Label(self, text=label_text)
-      label.grid(row=idx, column=0, padx=1, pady=1,sticky='ew')
-      
-      entry = tk.Entry(self)
-      entry.grid(row=idx, column=1, padx=1, pady=1, sticky='w')
+      label = tk.Label(self, text=label_text, width=3,)
+      label.grid(row=idx+1, column=0, padx=1, pady=1, sticky='ew')
+      entry = tk.Entry(self, width=45)
+      entry.grid(row=idx+1, column=1, padx=1, pady=1, sticky='w')
       self.entries.append(entry)
 
   
@@ -64,6 +67,8 @@ class CTrapeze(AIntegration):
     squares = ["f","a","b","n"]
     super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
+
+    self.create_instructions('Trapecio con función')
     
     self.result = tk.Label(self, text="" , width=65)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
@@ -89,6 +94,9 @@ class CTrapezePuntos(AIntegration):
     squares = ["xdata","ydata"]
     super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
+
+    self.create_instructions('Trapecio con datos, puedes dejar el ydata vacío si quieres para casos especificos que es necesario')
+
     
     self.result = tk.Label(self, text="" , width=65)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
@@ -115,6 +123,9 @@ class CSimpson13(AIntegration):
     squares = ["f","a","b","n"]
     super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
+
+    self.create_instructions('Simpson 1/3, recuerda que solo se permite n par, osea múltiplo de 2')
+
     
     self.result = tk.Label(self, text="" , width=65)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
@@ -140,6 +151,9 @@ class CSimpson38(AIntegration):
     squares = ["f","a","b","n"]
     super().__init__(parent, controller,  squares)
     last_row = self.grid_size()[1] - 1
+
+    self.create_instructions('Simpson 1/3, recuerda que solo se permite n múltiplo de 3')
+
     
     self.result = tk.Label(self, text="" , width=65)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )

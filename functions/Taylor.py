@@ -12,8 +12,8 @@ def Taylor(f,x0,n):
   P=0
   x = sp.symbols('x')
   for i in range(int(n+1)):
-    df    = sp.diff(f,x,i).subs({x:x0})
-    T    = (df*(x-x0)**i)/factorial(i)
+    df = sp.diff(f,x,i).subs({x:x0})
+    T = (df*(x-x0)**i)/factorial(i)
     P += T
   return P
 
