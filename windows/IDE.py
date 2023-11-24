@@ -1,8 +1,9 @@
 import tkinter as tk
 from functions.DE import *
-from sympy import symbols,lambdify,exp,log
+from sympy import symbols,lambdify,exp,log,lambdify
 from tkinter import ttk
 from PIL import Image, ImageTk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class DE(tk.Frame):
   def __init__(self, parent, controller,orden=0,cuadros=0):
@@ -23,13 +24,23 @@ class DE(tk.Frame):
       entry.grid(row=idx, column=1, padx=0, pady=0)
     
       self.entries.append(entry)
+
+  def graph(self,x,y):
+    fig = plt.figure(figsize=(6, 4))
+    plt.plot(x, y,'o')
+    plt.title('Gráfica de ejemplo')
+    plt.xlabel('Eje X')
+    plt.ylabel('Eje Y')
+    plt.grid(True)
+    plt.close()
+    return fig
     
-  def show_result(self,grafica):    
+  def show_result(self,graph):    
     top = tk.Toplevel(self)
     top.title("Tabla de datos")
-    imagen_tk = ImageTk.PhotoImage(grafica)
-    label_imagen = tk.Label(top, image=imagen_tk)
-    label_imagen.pack() 
+    canvas = FigureCanvasTkAgg(graph, master=top)
+    canvas.draw()
+    canvas.get_tk_widget().pack()
 
 
 class CEuler(DE):
@@ -40,46 +51,35 @@ class CEuler(DE):
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_euler())  
     execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
     
-  def graficar(self,t,P):
-    # P=np.array(P)
-    # plt.subplot(121)
-    # plt.plot(t,P[:,0])
-    # plt.grid()
-    # # plt.xlim(9.4, 9.6)
-    # plt.xlabel('tiempo')
-    # plt.ylabel('posicion')
-    # plt.subplot(122)
-    # plt.plot(t,P[:,1])
-    # plt.xlabel('tiempo')
-    # plt.xlabel('posicion')
-    # plt.grid(True)
-    x = np.linspace(0, 10, 100)
-    y = np.sin(x)
-
-    plt.figure(figsize=(6, 4))
-    plt.plot(x, y)
-    plt.title('Gráfica de ejemplo')
-    plt.xlabel('Eje X')
-    plt.ylabel('Eje Y')
-    plt.grid(True)
-        
-    plt.savefig('img')
-    plt.close()
-    
-    imagen = Image.open('imgn')
-    imagen_tk = ImageTk.PhotoImage(imagen)
-
-    return imagen
     
   def solve_euler(self): 
     try:
-      x=symbols('x')
-      tiempo=matriz=0
-      # tiempo,matriz = Euler(eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get())\
-      #   , float(self.entries[3].get()), float(self.entries[4].get()))
-      grafica = self.graficar(tiempo,matriz)
+      x,t=symbols('x t')
+      f,a,b,h,co = eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()),float(self.entries[3].get()), float(self.entries[4].get())
+      f = lambdify([t,x],f)
+      t,points = Euler(f,a,b,h,co)
+      grafica = self.graph(t,points)
       self.show_result(grafica)  
-      # last_row = self.grid_size()[1] - 1
+    except Exception as e:
+      print(e) 
+
+
+class CRunge(DE):
+  def __init__(self, parent, controller, orden=0, cuadros=0):
+    cuadros = ["f","a","b","h","co"]
+    super().__init__(parent, controller, orden, cuadros)
+    last_row = self.grid_size()[1] - 1
+    execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_runge())  
+    execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
+    
+  def solve_runge(self): 
+    try:
+      x,t=symbols('x t')
+      f,a,b,h,co = eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()),float(self.entries[3].get()), float(self.entries[4].get())
+      f = lambdify([t,x],f)
+      t,points = runge4(f,a,b,h,co)
+      grafica = self.graph(t,points)
+      self.show_result(grafica)  
     except Exception as e:
       print(e) 
     

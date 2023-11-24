@@ -11,6 +11,7 @@ def Euler(f,a,b,h,co):
       yeu.append(yeu[i]+h*f(t[i],yeu[i]))
   return t,yeu
 
+
 def runge4(f,a,b,h,co):
   n= int((b-a)/h)
   t = np.linspace(a,b,n+1)

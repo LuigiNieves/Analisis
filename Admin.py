@@ -1,8 +1,9 @@
 import tkinter as tk
+from tkinter import Menu
 from windows.IZeros import Home, CNewton, CBiseccion, CFalsaPosicion, CSecante
 from windows.IInterpolation import CPsimple,CMinimos,CLagrange
-from tkinter import Menu
 from windows.IIntegration import CTrapeze,CTrapezePuntos,CSimpson13,CSimpson38
+from windows.IDE import CEuler,CRunge
 
 class Admin(tk.Tk):
   def __init__(self, *args, **kwargs):
@@ -20,7 +21,7 @@ class Admin(tk.Tk):
 
     self.frames={}
     for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante,CPsimple,CMinimos,CLagrange,CTrapeze \
-              ,CTrapezePuntos,CSimpson13,CSimpson38
+              ,CTrapezePuntos,CSimpson13,CSimpson38, CEuler,CRunge
               ):
         frame=F(container,self)
         self.frames[F]=frame
@@ -49,8 +50,8 @@ class Admin(tk.Tk):
     sub_menu_ceros.add_command(label="Secante",font=("Arial","10"),command=lambda:self.show_frame(CSecante))
 
     sub_menu_curvas = tk.Menu(self.menu_juego,tearoff=0)
-    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"))
-    sub_menu_curvas.add_command(label="Runge Kutta",font=("Arial","10"))
+    sub_menu_curvas.add_command(label="Euler",font=("Arial","10"),command=lambda:self.show_frame(CEuler))
+    sub_menu_curvas.add_command(label="Runge Kutta",font=("Arial","10"),command=lambda:self.show_frame(CRunge))
 
     sub_menu_interpolacion = tk.Menu(self.menu_juego,tearoff=0)
     sub_menu_interpolacion.add_command(label="Polinomial Simple",font=("Arial","10"),command=lambda:self.show_frame(CPsimple))
