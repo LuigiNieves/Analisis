@@ -69,8 +69,7 @@ class CMinimos(AInterpolation):
     except Exception as e:
       print(e) 
 
-
-  
+      
   def graph(self,x,y,f):
     fig=plt.figure(figsize=(6, 4))
     plt.plot(x, y,'o',label='Puntos Observados')

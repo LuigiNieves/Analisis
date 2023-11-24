@@ -44,6 +44,43 @@ def lagrange(xdata,ydata):
     P = P + T*ydata[i]
   return P,sp.lambdify(X,P)
 
+def x2(x,y):
+  return [i**2 for i in x],y
+
+def x3(x,y):
+  return [i**3 for i in x],y
+
+def sqrtx(x,y):
+  return [i**(1/2) for i in x],y
+
+def logx(x,y):
+  return [np.log(i) for i in x],y
+
+def logy(x,y):
+  return x,[np.log(i) for i in y]
+
+def y2(x,y):
+  return x,[i**2 for i in y]
+
+def logxlogy(x,y):
+  return [np.log(i) for i in x],[np.log(j) for j in y]
+
+def divsqrty(x,y):
+  return x,[1/i**(1/2) for i in y]
+
+
+# functions = [
+# x2,
+# x3,
+# sqrtx,
+# logx,
+# logy,
+# y2,
+# logxlogy,
+# divsqrty,
+# ]
+
+
 def graficas9(x,y):
   x = np.array(x)
   y = np.array(y)
@@ -55,43 +92,51 @@ def graficas9(x,y):
   plt.grid()
   plt.title('Datos observados')
 
+  x_,y_ = x2(x,y)
   plt.subplot(332)
-  plt.plot(x**2,y,'m*')
+  plt.plot(x_,y_,'m*')
   plt.grid()
   plt.title('x^2')
 
+  x_,y_ = x3(x,y)
   plt.subplot(333)
-  plt.plot(x**3,y,'cd')
+  plt.plot(x_,y_,'cd')
   plt.grid()
   plt.title('x^3')
 
+  x_,y_ = sqrtx(x,y)
   plt.subplot(334)
-  plt.plot(x**(1/2),y,'yp')
+  plt.plot(x_,y_,'yp')
   plt.grid()
   plt.title('sqrt(x)')
 
+  x_,y_ = logx(x,y)
   plt.subplot(335)
-  plt.plot(np.log(x),y,'bv')
+  plt.plot(x_,y_,'bv')
   plt.grid()
   plt.title('log(x)')
 
+  x_,y_ = logy(x,y)
   plt.subplot(336)
-  plt.plot(x,np.log(y),'g*')
+  plt.plot(x_,y_,'g*')
   plt.grid()
   plt.title('log(y)')
 
+  x_,y_ = y2(x,y)
   plt.subplot(337)
-  plt.plot(x,y**2,'rp')
+  plt.plot(x_,y_,'rp')
   plt.grid()
   plt.title('sqrt(y)')
 
+  x_,y_ = logxlogy(x,y)
   plt.subplot(338)
-  plt.plot(np.log(x),np.log(y),'bs')
+  plt.plot(x_,y_,'bs')
   plt.grid()
   plt.title('log(x) y log(y)')
 
+  x_,y_ = divsqrty(x,y)
   plt.subplot(339)
-  plt.plot(x,1/y**(1/2),'y*')
+  plt.plot(x_,y_,'y*')
   plt.grid()
   plt.title('1/sqrt(y)')
   
