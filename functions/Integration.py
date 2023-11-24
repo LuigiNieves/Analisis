@@ -24,7 +24,7 @@ def simpson13(f,a,b,n):
     raise Exception('Se necesita un numero par')
   h = (b-a)/n
   even = odd = 0
-  for i in range(1,n):
+  for i in range(1,int(n)):
     if i%2 == 0: even+=f(a+i*h)
     else: odd+=f(a+i*h)
   I = h/3*(f(a)+2*even+4*odd + f(b))
@@ -36,7 +36,7 @@ def simpson38(f,a,b,n):
   h = (b-a)/n
   not_multiply_of_3 = multiply_of_3 = 0
 
-  for i in range(1,n):
+  for i in range(1,int(n)):
     if i%3 == 0: multiply_of_3+=f(a+i*h)
     else: not_multiply_of_3+=f(a+i*h)
   I = 3*h/8*(f(a)+3*not_multiply_of_3+2*multiply_of_3 + f(b))

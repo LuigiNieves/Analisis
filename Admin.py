@@ -2,7 +2,7 @@ import tkinter as tk
 from windows.IZeros import Home, CNewton, CBiseccion, CFalsaPosicion, CSecante
 from windows.IInterpolation import CPsimple,CMinimos,CLagrange
 from tkinter import Menu
-from windows.IIntegration import CTrapeze
+from windows.IIntegration import CTrapeze,CTrapezePuntos,CSimpson13,CSimpson38
 
 class Admin(tk.Tk):
   def __init__(self, *args, **kwargs):
@@ -19,7 +19,9 @@ class Admin(tk.Tk):
     container.grid_rowconfigure(0,weight=1)
 
     self.frames={}
-    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante,CPsimple,CMinimos,CLagrange,CTrapeze):
+    for F in (Home,CNewton,CBiseccion, CFalsaPosicion, CSecante,CPsimple,CMinimos,CLagrange,CTrapeze \
+              ,CTrapezePuntos,CSimpson13,CSimpson38
+              ):
         frame=F(container,self)
         self.frames[F]=frame
         frame.grid(row=0, column=0, sticky =tk.NSEW)
@@ -57,9 +59,9 @@ class Admin(tk.Tk):
 
     sub_menu_integration = tk.Menu(self.menu_juego,tearoff=0)
     sub_menu_integration.add_command(label="Trapecio función",font=("Arial","10"),command=lambda:self.show_frame(CTrapeze))
-    sub_menu_integration.add_command(label="Trapecio datos",font=("Arial","10"),command=lambda:self.show_frame(CLagrange))
-    sub_menu_integration.add_command(label="Simpson 1/3",font=("Arial","10"),command=lambda:self.show_frame(CMinimos))
-    sub_menu_integration.add_command(label="Simpson 3/8",font=("Arial","10"),command=lambda:self.show_frame(CMinimos))
+    sub_menu_integration.add_command(label="Trapecio datos",font=("Arial","10"),command=lambda:self.show_frame(CTrapezePuntos))
+    sub_menu_integration.add_command(label="Simpson 1/3",font=("Arial","10"),command=lambda:self.show_frame(CSimpson13))
+    sub_menu_integration.add_command(label="Simpson 3/8",font=("Arial","10"),command=lambda:self.show_frame(CSimpson38))
     
     self.menu_juego.add_cascade(label="Ceros", menu = sub_menu_ceros )  
     self.menu_juego.add_cascade(label="EDO", menu = sub_menu_curvas )  
