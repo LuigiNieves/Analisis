@@ -2,6 +2,7 @@ import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from functions.Integration import trapecio
 import sympy as sp
+from sympy import sin,cos,exp,log,tan
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,9 +20,9 @@ class AIntegration(tk.Frame):
   def widget(self):
     for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text)
-      label.grid(row=idx, column=0, padx=10, pady=5)
+      label.grid(row=idx, column=0, padx=1, pady=1,sticky='ew')
       entry = tk.Entry(self)
-      entry.grid(row=idx, column=1, padx=10, pady=5)
+      entry.grid(row=idx, column=1, padx=1, pady=1, sticky='w')
       self.entries.append(entry)
 
   
@@ -47,7 +48,7 @@ class CTrapeze(AIntegration):
     super().__init__(parent, controller, order, squares)
     last_row = self.grid_size()[1] - 1
     
-    self.result = tk.Label(self, text="" , width=65, wraplength=200)
+    self.result = tk.Label(self, text="" , width=65)
     self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
     
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_trapecio())  
