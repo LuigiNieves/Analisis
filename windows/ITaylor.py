@@ -2,9 +2,12 @@ import tkinter as tk
 from functions.Interpolation import *
 from sympy import symbols,lambdify,exp,log,sqrt
 from tkinter import ttk
-from functions.Taylor import Taylor,Cota_t
+from functions.Taylor import Taylor,Cota_t,diferenciacion
 from sympy import sin,cos,tan
 from tkinter import messagebox
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 
 
@@ -91,6 +94,46 @@ class CCota(AZeros):
       f,x_,n,x0 = eval(self.entries[0].get()), float(self.entries[1].get()), float(self.entries[2].get()),float(self.entries[3].get())
       p = Cota_t(f,x_,n,x0)
       self.result.config(text=f'La cota es {p}')
+    except Exception as e:
+      messagebox.showinfo("Error",e)  
+
+class CDifferentiation(AZeros):
+  def __init__(self, parent, controller, orden=0):
+    squares = ["a","b","h",'x0','k']
+    super().__init__(parent, controller, orden,squares)
+
+    last_row = self.grid_size()[1] - 1
+
+    self.result = tk.Label(self, text="" , width=65,wraplength=200)
+    self.result.grid(row=last_row+1, column=1, padx=1, pady=1,sticky='nsew' )
+    
+    execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_taylor())  
+    execute.grid(row=last_row+2, column=0, padx=2, pady=5)
+
+  def graph(self,graph):    
+    top = tk.Toplevel(self)
+    top.title("Tabla de datos")
+    canvas = FigureCanvasTkAgg(graph, master=top)
+    canvas.draw()
+    canvas.get_tk_widget().pack()
+    
+  def solve_taylor(self): 
+    try:
+      x=symbols('x')
+      a,b,h,x0,k = float(self.entries[0].get()),float(self.entries[1].get()),float(self.entries[2].get()),float(self.entries[3].get()),eval(self.entries[4].get())
+      k = lambdify(x,k)
+      t,points = diferenciacion([a,b],h,x0,k )
+      self.result.config(text=f'La aproximación final es de {points[-1]}')
+      fig=plt.figure(figsize=(6, 4))
+      plt.plot(t, points,label='Diferenciacion')
+      plt.title('Gráfica de diferenciación')
+      plt.xlabel('X')
+      plt.ylabel('Y')
+      plt.grid()
+      plt.legend()
+      plt.close()
+      self.graph(fig)
+
     except Exception as e:
       messagebox.showinfo("Error",e)  
   

@@ -26,3 +26,13 @@ def Cota_t(f,x_,n,x0):
     Max = np.max(np.abs(df(U)))
     cota = (Max*(x_-x0)**(n+1))/factorial(n+1)
     return cota
+
+def diferenciacion(intervalos:list,h: float,x0: float,k):
+    valores = [x0]
+    inicial,final = intervalos
+    puntos = int((final - inicial)/h)
+    t = np.linspace(inicial,final,puntos+1)
+    for i in range(puntos):
+        valores.append(k(valores[i])*h + valores[i])
+    return t,valores
+
