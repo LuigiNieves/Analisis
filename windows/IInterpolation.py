@@ -14,11 +14,10 @@ def isNumeric(s):
 
 
 class AInterpolation(tk.Frame):
-  def __init__(self, parent, controller,order=0,squares=0):
+  def __init__(self, parent, controller,squares=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
-    # self.order = order
     self.squares = squares
     self.entries =[]
     self.widget()
@@ -27,8 +26,9 @@ class AInterpolation(tk.Frame):
     for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text, width=3)
       label.grid(row=idx, column=0, padx=1, pady=1 ,sticky='ew')
-      entry = tk.Entry(self, width=65)
-      entry.grid(row=idx, column=1, padx=1, pady=1)
+      
+      entry = tk.Entry(self, width=45)
+      entry.grid(row=idx, column=1, padx=1, pady=1,sticky='w')
       self.entries.append(entry)
     
   def show_result(self,graph):    
@@ -41,9 +41,9 @@ class AInterpolation(tk.Frame):
     
 
 class CMinimos(AInterpolation):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller, squares=0):
     squares = ["xdata","ydata"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller,  squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=55, wraplength=200)
@@ -97,9 +97,9 @@ class CMinimos(AInterpolation):
 
     
 class CPsimple(AInterpolation):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller,  squares=0):
     squares = ["xdata","ydata"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller,  squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)
@@ -119,9 +119,9 @@ class CPsimple(AInterpolation):
 
 
 class CLagrange(AInterpolation):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller,  squares=0):
     squares = ["xdata","ydata"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65, wraplength=200)

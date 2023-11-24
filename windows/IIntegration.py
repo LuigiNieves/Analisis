@@ -16,11 +16,10 @@ def isNumeric(s):
         return False
 
 class AIntegration(tk.Frame):
-  def __init__(self, parent, controller,orden=0,squares=0):
+  def __init__(self, parent, controller,squares=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
-    # self.orden = orden
     self.squares =  squares
     self.entries =[]
     self.widget()
@@ -29,6 +28,7 @@ class AIntegration(tk.Frame):
     for idx, label_text in enumerate(self.squares):
       label = tk.Label(self, text=label_text)
       label.grid(row=idx, column=0, padx=1, pady=1,sticky='ew')
+      
       entry = tk.Entry(self)
       entry.grid(row=idx, column=1, padx=1, pady=1, sticky='w')
       self.entries.append(entry)
@@ -59,9 +59,9 @@ class AIntegration(tk.Frame):
 
 
 class CTrapeze(AIntegration):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller, squares=0):
     squares = ["f","a","b","n"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65)
@@ -84,9 +84,9 @@ class CTrapeze(AIntegration):
       
       
 class CTrapezePuntos(AIntegration):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller, squares=0):
     squares = ["xdata","ydata"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65)
@@ -110,9 +110,9 @@ class CTrapezePuntos(AIntegration):
       print(e)    
 
 class CSimpson13(AIntegration):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller, squares=0):
     squares = ["f","a","b","n"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller, squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65)
@@ -136,9 +136,9 @@ class CSimpson13(AIntegration):
       
       
 class CSimpson38(AIntegration):
-  def __init__(self, parent, controller, order=0, squares=0):
+  def __init__(self, parent, controller, squares=0):
     squares = ["f","a","b","n"]
-    super().__init__(parent, controller, order, squares)
+    super().__init__(parent, controller,  squares)
     last_row = self.grid_size()[1] - 1
     
     self.result = tk.Label(self, text="" , width=65)

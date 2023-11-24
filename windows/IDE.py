@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class DE(tk.Frame):
-  def __init__(self, parent, controller,orden=0,cuadros=0):
+  def __init__(self, parent, controller,cuadros=0):
     super().__init__(parent)
     self.configure(background = "blue")
     self.controller =controller  
@@ -17,11 +17,11 @@ class DE(tk.Frame):
     
   def widget(self):
     for idx, label_text in enumerate(self.cuadros):
-      label = tk.Label(self, text=label_text, width=3)
-      label.grid(row=idx, column=0, padx=0, pady=0)
+      label = tk.Label(self, text=label_text, width=3,)
+      label.grid(row=idx, column=0, padx=1, pady=1, sticky='ew')
       
       entry = tk.Entry(self, width=45)
-      entry.grid(row=idx, column=1, padx=0, pady=0)
+      entry.grid(row=idx, column=1, padx=1, pady=1, sticky='w')
     
       self.entries.append(entry)
 
@@ -44,9 +44,9 @@ class DE(tk.Frame):
 
 
 class CEuler(DE):
-  def __init__(self, parent, controller, orden=0, cuadros=0):
+  def __init__(self, parent, controller, cuadros=0):
     cuadros = ["f","a","b","h","co"]
-    super().__init__(parent, controller, orden, cuadros)
+    super().__init__(parent, controller, cuadros)
     last_row = self.grid_size()[1] - 1
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_euler())  
     execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
@@ -65,9 +65,9 @@ class CEuler(DE):
 
 
 class CRunge(DE):
-  def __init__(self, parent, controller, orden=0, cuadros=0):
+  def __init__(self, parent, controller, cuadros=0):
     cuadros = ["f","a","b","h","co"]
-    super().__init__(parent, controller, orden, cuadros)
+    super().__init__(parent, controller, cuadros)
     last_row = self.grid_size()[1] - 1
     execute = tk.Button(self,text="Ejecutar",command=lambda:self.solve_runge())  
     execute.grid(row=last_row+1, column=0, padx=2, pady=5) 
